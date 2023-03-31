@@ -1,0 +1,5 @@
+.vscode/
+build/bin
+frontend/node_modules
+frontend/dist
+saya/

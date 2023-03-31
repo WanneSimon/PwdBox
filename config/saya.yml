@@ -1,0 +1,6 @@
+# 启用 debug 模式
+debug: false
+# 无边框
+frameless: false
+# emoji path
+
