@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 
+	"github.com/wailsapp/wails/v2/pkg/runtime"
 	"github.com/wanneSimon/saya-app/conf"
 )
 
@@ -39,6 +40,10 @@ func (a *App) Context() context.Context {
 func (a *App) Exit() {
 	log.Println("Exit...")
 	os.Exit(0)
+}
+
+func (a *App) Minimises() {
+	runtime.WindowMinimise(a.ctx)
 }
 
 func (a *App) Config() conf.AppConfig {

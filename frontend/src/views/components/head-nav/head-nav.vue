@@ -17,18 +17,26 @@
       </label>
     
       <label class="right-pos">
-        <el-button size="small" type="warning" @click="exit">退出</el-button>
-        <el-button size="small" @click="goBack">返回</el-button>
+        <!-- <el-button size="small" type="warning" @click="min" :icon="'Minus'">最小化</el-button>
+        <el-button size="small" type="warning" @click="exit" :icon="'Close'">退出</el-button>
+        <el-button size="small" @click="goBack" :icon="'ArrowLeftBold'">返回</el-button> -->
+        <el-button size="small" @click="goBack" title="返回">
+            <el-icon><ArrowLeftBold /></el-icon></el-button>
+        <el-button size="small" type="warning" @click="min" title="最小化">
+          <el-icon><Minus /></el-icon></el-button>
+        <el-button size="small" type="danger" @click="exit" :icon="Close" title="关闭">
+          <el-icon><Close /></el-icon></el-button>
       </label>
   </div>
 </template>
 
 <script>
-import { Exit } from "/wailsjs/index.js"
+import { Exit, Minimises } from "/wailsjs/index.js"
+import { Minus, Close, ArrowLeftBold } from '@element-plus/icons-vue'
 
 export default {
     name: 'HeadNav',
-    components: { },
+    components: { Minus, Close, ArrowLeftBold },
     data () {
         return {
             
@@ -41,6 +49,9 @@ export default {
       },
       exit() {
         Exit()
+      },
+      min(){
+        Minimises()
       }
     }
 }
@@ -54,9 +65,10 @@ export default {
   line-height: 2.4rem;
   position: relative;
 
+  padding-left: 10rem;
   padding-right: 10rem;
 
-  text-align: left;
+  text-align: center;
   background-color: rgba($color: #000000, $alpha: 0.3);
   a {
     color: #606266 !important;
@@ -67,8 +79,13 @@ export default {
 
   .right-pos{
     position: absolute;
-    right: 0.2rem;
+    right: 1px;
     top: 0;
+    width: rem;
   }
+}
+
+:deep(.el-button+.el-button) {
+  margin-left: 1px;
 }
 </style>
