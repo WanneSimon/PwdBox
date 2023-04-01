@@ -4,11 +4,15 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"os"
+
+	"github.com/wanneSimon/saya-app/conf"
 )
 
 // App struct
 type App struct {
-	ctx context.Context
+	ctx    context.Context
+	config conf.AppConfig
 }
 
 // NewApp creates a new App application struct
@@ -26,4 +30,21 @@ func (a *App) startup(ctx context.Context) {
 // Greet returns a greeting for the given name
 func (a *App) Greet(name string) string {
 	return fmt.Sprintf("Hello %s, It's show time!", name)
+}
+
+func (a *App) Context() context.Context {
+	return a.ctx
+}
+
+func (a *App) Exit() {
+	log.Println("Exit...")
+	os.Exit(0)
+}
+
+func (a *App) Config() conf.AppConfig {
+	return a.config
+}
+
+func (a *App) SaveConfig(ac conf.AppConfig) bool {
+	return ac.SaveAppConfig()
 }

@@ -38,6 +38,11 @@ const bgImgs =  [
   right: 0;
   bottom: 0;
 }
+.index {
+  :deep(.el-scrollbar__view) {
+    height: 100%;
+  }
+}
 </style>
 
 <script>

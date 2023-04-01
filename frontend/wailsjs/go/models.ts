@@ -5,6 +5,7 @@ export namespace env {
 	    size: number;
 	    isDir: boolean;
 	    path: string;
+	    ext: string;
 	
 	    static createFrom(source: any = {}) {
 	        return new CusFileInfo(source);
@@ -16,6 +17,7 @@ export namespace env {
 	        this.size = source["size"];
 	        this.isDir = source["isDir"];
 	        this.path = source["path"];
+	        this.ext = source["ext"];
 	    }
 	}
 

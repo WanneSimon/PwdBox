@@ -1,0 +1,7 @@
+# 启用 debug 模式
+debug: true
+# 无边框
+frameless: true
+# emoji path
+emojis:
+  - "G:\\Q图MessicPictures"

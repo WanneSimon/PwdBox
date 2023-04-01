@@ -1,6 +1,5 @@
-# 启用 debug 模式
-debug: false
-# 无边框
-frameless: false
-# emoji path
-
+debug: true
+frameless: true
+emojis:
+    - G:\Q图MessicPictures
+    - G:\Q图MessicPictures\奇趣

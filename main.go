@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"embed"
 	"fmt"
 	"log"
@@ -13,7 +14,7 @@ import (
 	"github.com/wailsapp/wails/v2"
 	"github.com/wailsapp/wails/v2/pkg/options"
 	"github.com/wailsapp/wails/v2/pkg/options/assetserver"
-	"github.com/wanneSimon/saya-app/config"
+	"github.com/wanneSimon/saya-app/conf"
 	"github.com/wanneSimon/saya-app/env"
 )
 
@@ -27,10 +28,13 @@ func main() {
 
 	// configs
 	var rootPath string = GetCurrentAbPath()
+	// var rootPath string = "D:\\Git_Repo\\saya"
 	// appConfig := strings.Join(rootPath, filepath.Separator, "config", filepath.Separator, "saya.yml")
 	sp := fmt.Sprintf("%c", filepath.Separator)
-	var appConfig = rootPath + sp + "config" + sp + "saya.yml"
-	ac := config.LoadAppConfig(appConfig)
+	var appConfigPath = rootPath + sp + "config" + sp + "saya.yml"
+	appConfig := conf.LoadAppConfig(appConfigPath)
+	fmt.Println("appconfig", appConfig)
+	app.config = appConfig
 
 	// Create application with options
 	err := wails.Run(&options.App{
@@ -39,12 +43,15 @@ func main() {
 		Height:    768,
 		MinWidth:  930,
 		MinHeight: 490,
-		Frameless: ac.Frameless,
+		Frameless: appConfig.Frameless,
 		AssetServer: &assetserver.Options{
 			Assets: assets,
 		},
 		BackgroundColour: &options.RGBA{R: 27, G: 38, B: 54, A: 1},
-		OnStartup:        app.startup,
+		OnStartup: func(ctx context.Context) {
+			app.startup(ctx)
+			fileOp.SetContext(ctx)
+		},
 		Bind: []interface{}{
 			app, fileOp,
 		},

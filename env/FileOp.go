@@ -1,13 +1,16 @@
 package env
 
 import (
+	"context"
 	"io/fs"
 	"io/ioutil"
 	"log"
+	"os"
 	"path/filepath"
 	"strings"
 
 	imgtype "github.com/shamsher31/goimgtype"
+	"github.com/wailsapp/wails/v2/pkg/runtime"
 )
 
 // 大写开头的变量不符合 js 的风格，用 tag 重新设置字段在 json 中的名字
@@ -20,6 +23,7 @@ type CusFileInfo struct {
 	// Sys   any  // underlying data source (can return nil)
 
 	Path string `json:"path"`
+	Ext  string `json:"ext"` // 扩展类型
 }
 
 func NewCusFileInfo(info fs.FileInfo, parentPath string) CusFileInfo {
@@ -28,10 +32,12 @@ func NewCusFileInfo(info fs.FileInfo, parentPath string) CusFileInfo {
 		Size:  info.Size(),
 		IsDir: info.IsDir(),
 		Path:  filepath.Join(parentPath, info.Name()),
+		Ext:   filepath.Ext(info.Name()),
 	}
 }
 
 type FileOp struct {
+	ctx context.Context
 }
 
 // 获取文件夹下所有文件
@@ -39,6 +45,16 @@ type FileOp struct {
 func (fo *FileOp) List(path string) []CusFileInfo {
 	var list = []CusFileInfo{}
 	if strings.Trim(path, " ") == "" {
+		return list
+	}
+
+	fi, err := os.Stat(path)
+	// if err != nil && os.IsNotExist(err) {
+	if err != nil {
+		return list
+	}
+
+	if !fi.IsDir() {
 		return list
 	}
 
@@ -84,4 +100,45 @@ func (fo *FileOp) ListImage(path string) []CusFileInfo {
 	}
 
 	return re
+}
+
+// 读取文件 （返回的字节数组会自动base64编码成字符串）
+func (fo *FileOp) Open(path string) []byte {
+	_, err := os.Stat(path)
+	// if err != nil && os.IsNotExist(err) {
+	if err != nil {
+		log.Println(err)
+		return nil
+	}
+
+	file, err := os.Open(path)
+	if err != nil {
+		log.Println("文件打开失败")
+		log.Println(err)
+	}
+	data, err2 := ioutil.ReadAll(file)
+	if err2 != nil {
+		log.Println("文件读取失败")
+		log.Println(err2)
+	}
+
+	return data
+}
+
+func (fo *FileOp) SetContext(ctx context.Context) {
+	fo.ctx = ctx
+}
+
+// 打开文件夹选择
+func (fo *FileOp) SelectFolder(title string) string {
+	// var p = GetCurrentAbPath()
+	folder, err := runtime.OpenDirectoryDialog(fo.ctx, runtime.OpenDialogOptions{
+		// DefaultDirectory: p,
+	})
+	// return nil
+	if err != nil {
+		log.Println(err)
+		return ""
+	}
+	return folder
 }

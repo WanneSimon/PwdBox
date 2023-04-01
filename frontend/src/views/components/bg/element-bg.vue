@@ -85,6 +85,11 @@ export default {
      * 
      *  */ 
     changeBg(isFirst) {
+      if(!isFirst  &&  this.loadedImages?.length 
+          && this.loadedImages?.length <= 1) {
+        return
+      }
+
       const bg_1 = this.$refs.mainBg_1
       const bg_2 = this.$refs.mainBg_2
 
