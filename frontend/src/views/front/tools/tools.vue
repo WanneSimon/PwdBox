@@ -3,7 +3,11 @@
     <meta-header :metaInfo="{ title: metaTitle }"></meta-header>
     <div v-for="item,index in tools" :key="'tool_'+index"
       class="tool-item float-block">
-      <a :href="item.link">{{item.name}}</a>
+
+      
+      <router-link :to="item.link" v-if="item.inner">{{item.name}}</router-link>
+      <a :href="item.link" v-else>{{item.name}}</a>
+
       <div class="intro">
         <el-scrollbar>
           {{item.desc}}
@@ -79,12 +83,14 @@ export default {
         {
           "name": "flv拉流测试",
           "link": baseUrl + "/tool/live",
-          "desc": "b站开源库-flv.js，拉取视频流和直播流"
+          "desc": "b站开源库-flv.js，拉取视频流和直播流",
+          "inner": true
         },
         {
           "name": "随机猫猫",
           "link": baseUrl + "/tool/cats",
-          "desc": "thecatapi开放的随机猫猫接口"
+          "desc": "thecatapi开放的随机猫猫接口",
+          "inner": true
         }
       ]
     },
