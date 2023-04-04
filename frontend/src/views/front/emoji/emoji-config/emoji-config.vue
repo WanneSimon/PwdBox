@@ -15,6 +15,7 @@
     </div>
 
     <div class="btn-bottom">
+        <el-button @click="back">返回</el-button>
         <el-button @click="pushNewConfig" type="primary"> + </el-button>
         <el-button @click="resetConfig" type="warning"> 重置  </el-button>
         <el-button @click="saveConfig" type="success"> 保存  </el-button>

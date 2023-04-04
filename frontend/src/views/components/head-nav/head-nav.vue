@@ -24,7 +24,7 @@
             <el-icon><ArrowLeftBold /></el-icon></el-button>
         <el-button size="small" type="warning" @click="min" title="最小化">
           <el-icon><Minus /></el-icon></el-button>
-        <el-button size="small" type="danger" @click="exit" :icon="Close" title="关闭">
+        <el-button size="small" type="danger" @click="exit" title="关闭">
           <el-icon><Close /></el-icon></el-button>
       </label>
   </div>

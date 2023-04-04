@@ -51,5 +51,9 @@ func (a *App) Config() conf.AppConfig {
 }
 
 func (a *App) SaveConfig(ac conf.AppConfig) bool {
-	return ac.SaveAppConfig()
+	if ac.SaveAppConfig() {
+		a.config = ac
+		return true
+	}
+	return false
 }

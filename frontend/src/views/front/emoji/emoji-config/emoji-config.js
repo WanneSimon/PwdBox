@@ -3,6 +3,7 @@ import { SaveConfig, FileOp, Config } from "/wailsjs/index.js"
 export default {
   name: 'Emoji',
   components: { },
+  emit: [ "saved", "close" ],
   inject: [ "Message" ],
   data () {
     return {
@@ -14,9 +15,6 @@ export default {
   },
   async mounted() { 
     await this.getConfig()
-
-    console.log("config", this.config)
-    console.log("emojis", this.emojis)
   },
   methods: {
     // 获取配置
@@ -35,15 +33,6 @@ export default {
       }
 
       this.loading = false
-    },
-
-    async save() {
-      let re =  await this.config.Save(res => res)
-      let msg = "保存成功"
-      if(!re) {
-        msg = "保存失败"
-      }
-      console.log(msg)
     },
 
     // 
@@ -78,9 +67,14 @@ export default {
       // console.log("Save", re)
       if(re) {
         this.Message.success("保存成功")
+        this.$emit("saved") // 不刷新自己组件的信息
       } else {
         this.Message.error("保存失败")
       }
+    },
+
+    back() {
+      this.$emit("close") // 关闭当前组件
     }
   }
 

@@ -14,7 +14,7 @@
           <div v-show="files && files.length>0" style="width:100%">
           <el-card v-for="item,index in files" :key="'file_'+index"
             :body-style="{ padding: '0px' }" class="img-item"> 
-                <el-image :src="item._url" :fit="'contain'" :preview-src-list="[item._url]">
+                <el-image :src="item._url" :fit="'contain'" :preview-src-list="[item._url]" >
                   <template #error>{{ item._url }}</template>
                 </el-image>
                 
@@ -29,8 +29,8 @@
     </div>
 
     <div v-if="showConfig">
-      <el-button @click="showConfig=false">返回</el-button>
-      <EmojiConfig ></EmojiConfig>
+      <!-- <el-button @click="showConfig=false">返回</el-button> -->
+      <EmojiConfig @saved="refreshConfig" @close="showConfig=false"></EmojiConfig>
     </div>
 
   </div>

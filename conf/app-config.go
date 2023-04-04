@@ -22,6 +22,9 @@ var Config AppConfig
 // app 的全局配置文件
 var ConfigPath string = ""
 
+// //go:embed saya-sample.yml
+// var sayaConfigString string
+
 func LoadAppConfig(path string) AppConfig {
 	log.Println("读取配置文件: " + path)
 
@@ -77,7 +80,7 @@ func (ac *AppConfig) SaveAppConfig() bool {
 func DefaultAppConfig() AppConfig {
 	return AppConfig{
 		Debug:     false,
-		Frameless: false,
+		Frameless: true,
 		Emojis:    []string{},
 	}
 }

@@ -18,7 +18,7 @@ const bgImgs =  [
 
 <template>
   <client-only>
-      <ElementBg :urls="bgImgs" :interval="10000" :random="true"></ElementBg>
+      <!-- <ElementBg :urls="bgImgs" :interval="10000" :random="true"></ElementBg> -->
       <HeadNav class="head-nav"></HeadNav>
       <el-scrollbar class="index" style="height: calc( 100% - 2.4rem )">
        <inner-app></inner-app>

@@ -38,7 +38,13 @@ export default {
     async getEmojiPath() {
       let conf =  await Config().then(res => res)
       this.paths = conf.Emojis
+      console.log("this.paths", this.paths)
       return this.paths
+    },
+    refreshConfig() {
+      // 异步刷新即可，不删除当前结果
+      console.log("refresh!")
+      this.getEmojiPath()
     },
 
     // 根据文件名搜索
@@ -63,9 +69,21 @@ export default {
 
         let limit = 99999999
         for(let k=0; k< fsFiltered.length && k<limit ; k++) {
-          await this.loadFileData(fsFiltered, k, arr)
+          // await this.loadFileData(fsFiltered, k, arr)
+
+          let item = fsFiltered[k]
+          item._pre = null
+          item._url = null
+
+          FileOp.Open(item.path).then(res => {
+            let ext = item.ext
+            ext = ext && ext.length>0 ? ext.substring(1) : ""
+      
+            item._pre = "data:image/"+ext+";base64,"
+            item._url =  item._pre+ res
+          })
+          arr.push(item)
         }
-        // arr = arr.concat(fsFiltered)
       }
 
       this.files = arr
@@ -76,7 +94,7 @@ export default {
       this.searchByName(this.name)
     },
 
-    // 将文件用 url 的形式读取
+    // 将文件用 base64 的形式读取
     async loadFileData(arr, index, newArr) {
       let item = arr[index]
       let data = await FileOp.Open(item.path).then(res => res)
