@@ -2,12 +2,12 @@
  * 加载图片
  * @param {*} url 
  */
-export function loadImage(url) {
+export function loadImage(url:string) {
   return innerLoadImage(url)
 }
 
-function innerLoadImage(url) {
-  return new Promise(function(resolve, reject){
+function innerLoadImage(url:string) {
+  return new Promise<string>(function(resolve, reject){
     let img = new Image()
     
     img.onload = function() {
@@ -32,9 +32,9 @@ function innerLoadImage(url) {
  * @param oldBg - 预设背景，可选
  * @param mainBg - 新的背景
  * @param callback - 成功加载后的其他操作,可选
- */ 
+
 // export function loadBackground(url, mainBg, oldBg) {
-export function loadBackground(url, mainBg) {
+export function loadBackground(url:string, mainBg:string) {
   innerLoadImage(url)
     .then(img => {
       // const oldBg = this.$refs.originBg;
@@ -56,3 +56,4 @@ export function loadBackground(url, mainBg) {
       return Promise.reject(err)
     })
 }
+ */ 

@@ -1,19 +1,28 @@
 import { defineStore, storeToRefs } from "pinia"
-import cookieApi from '/src/api/cookie_api.js'
+import cookieApi from '@/api/cookie_api'
 
 // const store = globalStore()
 const cookieName = import.meta.env.VITE_COOKIE_AUTH
 
 // https://pinia.vuejs.org/introduction.html#a-more-realistic-example
 
+type StateInfo = {
+  count: number,
+  token: string | null |undefined,
+  userinfo: any | null |undefined,
+  permissions: Array<any> | null |undefined
+}
+
 const globalStore = defineStore('store', {
-  state: ()=> ({
-    count: 0, // for test
-    token: null,
-    userinfo: null,
-    permissions: null,  //  [ {role: '', permissions: [''] } ]
-    //=====
-  }),
+  state() {
+      const data : StateInfo = {
+        count: 0, // for test
+        token: null,
+        userinfo: null,
+        permissions: null,  //  [ {role: '', permissions: [''] } ]
+      }
+      return data
+  },
 
   getters: {
     getCounter: (state) => { // for test
@@ -22,7 +31,7 @@ const globalStore = defineStore('store', {
     },
 
     getUserInfo: (state) => {
-      return state.userInfo
+      return state.userinfo
     },
     getPermissions: (state) => {
       return state.permissions
@@ -31,10 +40,10 @@ const globalStore = defineStore('store', {
   },
 
   actions: {
-    addCounter (delta) { // for test
+    addCounter (delta:number) { // for test
       this.count += delta
     },
-    setToken(newToken, isSaveCookie=true) {
+    setToken(newToken:string, isSaveCookie=true) {
       this.token = newToken
       if(isSaveCookie && cookieName) {
         cookieApi.setRootCookie(cookieName, newToken, 7*24*60*60)
@@ -48,13 +57,13 @@ const globalStore = defineStore('store', {
       }
       this.permissions = null
     },
-    setUserinfo(userInfo) {
+    setUserinfo(userInfo:any) {
       this.userinfo = userInfo
     },
-    setPermissions(list) {
+    setPermissions(list:Array<any>) {
       this.permissions = list
     },
-    hasPermission(permission) {
+    hasPermission(permission:any) {
       if(!this.permissions) {
         return false
       }

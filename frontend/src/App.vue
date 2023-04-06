@@ -1,9 +1,12 @@
-<script setup>
+<script setup lang="ts">
 import { provide } from 'vue'
 import globalStore from './components/pinia/store.js'
 import ClientOnly from '@duannx/vue-client-only'
-import HeadNav from '/src/views/components/head-nav/head-nav.vue'
-import ElementBg from '/src/views/components/bg/element-bg.vue'
+// import HeadNav from '/src/views/components/head-nav/head-nav.vue'
+// import ElementBg from '/src/views/components/bg/element-bg.vue'
+import HeadNav from '@/views/components/head-nav/head-nav.vue'
+import ElementBg from '@/views/components/bg/element-bg.vue'
+import InnerApp from './InnerApp.vue';
 
 const store = globalStore()
 provide("store", store)
@@ -44,18 +47,3 @@ const bgImgs =  [
   }
 }
 </style>
-
-<script>
-import InnerApp from './InnerApp.vue';
-
-export default {
-  components: { InnerApp },
-  data () {
-    return {
-    }
-  },
-  mounted () {
-    // document.body.removeChild(document.getElementById('appLoading'));
-  },
-}
-</script>

@@ -8,7 +8,7 @@ import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import ElementPlus from 'unplugin-element-plus/vite'
 
-const WEB_PORT = process.env.port || process.env.npm_config_port || 8048 // dev port
+const WEB_PORT = process.env.port || process.env.npm_config_port || "8048" // dev port
 // const basePath = import.meta.env.VITE_FRONT_BASE || ''
 
 // https://vitejs.dev/config/
@@ -74,7 +74,7 @@ export default ({mode}) => {
     // 本地运行配置，及反向代理配置
     server: {
       host: 'localhost', // 指定服务器主机名
-      port: WEB_PORT, // 指定服务器端口
+      port: parseInt(WEB_PORT), // 指定服务器端口
       open: false, // 在服务器启动时自动在浏览器中打开应用程序
       strictPort: false, // 设为 false 时，若端口已被占用则会尝试下一个可用端口,而不是直接退出
       https: false, // 是否开启 https

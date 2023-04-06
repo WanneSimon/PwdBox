@@ -9,14 +9,15 @@ const ROOT_PATH = _rootPath.endsWith('/') ? _rootPath : _rootPath + '/'
  * @param {*} exdays 
  * @param {*} path 注意path要以 '/' 结尾，同时 path 要存在才能设置成功！
  */
-function setCookie(cname,cvalue,exSeconds,path){
+function setCookie(cname:string,cvalue:any,exSeconds:number,path:string){
   if(!cname) {
     throw new Error('Invalid cookie')
   }
 
   var d = new Date();
   d.setTime(d.getTime()+(exSeconds*1000));
-  var expires = "expires="+d.toGMTString();
+  // var expires = "expires="+d.toGMTString();
+  var expires = "expires="+d.toUTCString();
   cvalue = cvalue ? cvalue.trim() : cvalue
   var _path = path ? `path=${path}` : ''
   // document.cookie = cname.trim() + "=" + cvalue + "; " + expires + "; "+_path;
@@ -26,19 +27,19 @@ function setCookie(cname,cvalue,exSeconds,path){
   document.cookie = newCookie
 }
 
-function setRootCookie(cname, cvalue, exSeconds){
+function setRootCookie(cname:string, cvalue:any, exSeconds:number){
   setCookie(cname, cvalue, exSeconds, ROOT_PATH)
 }
 
-function removeCookie(cname, path) {
+function removeCookie(cname:string, path:string) {
   setCookie(cname, '', 0, path)
 }
 
-function removeRootCookie(cname) {
+function removeRootCookie(cname:string) {
   setCookie(cname, '', 0, ROOT_PATH)
 }
 
-function getCookie(cname){
+function getCookie(cname:string){
   var name = cname + "=";
   var ca = document.cookie.split(';');
   for(var i=0; i<ca.length; i++) {

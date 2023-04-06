@@ -53,7 +53,7 @@
 </style>
 
 <script>
-import MetaHeader from '/src/components/vue-meta/meta-header.vue'
+import MetaHeader from '@/components/vue-meta/meta-header.vue'
 // import axios from 'axios'
 import { ElScrollbar } from 'element-plus'
 

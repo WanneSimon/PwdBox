@@ -1,5 +1,5 @@
 // 保留一个使用样例，该文件并未使用到
-import request from '../request.js'
+import request from '../request'
 
 const ctxBase = "/base/u"
 

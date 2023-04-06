@@ -36,7 +36,8 @@
   </div>
 </template>
 
-<script src="./emoji.js"></script>
+<!-- <script src="./emoji.ts" lang="ts"></script> -->
+<script src="./emoji.js" ></script>
 
 <style scoped lang="scss">
 .emoji-wrapper{
@@ -50,6 +51,7 @@
   min-height: 50vh;
   display: flex;
   justify-content: center;
+  margin-top: 0.4rem;
 }
 
 .center-container{

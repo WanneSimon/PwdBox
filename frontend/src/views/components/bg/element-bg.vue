@@ -5,25 +5,35 @@
   <div class="mainBg mainBg2" ref="mainBg_2" ></div>
 </template>
 
-<script>
+<script lang="ts"> 
 // 通过 position: fixed 和 z-index 渲染在最底部
-import { loadImage, loadBackground } from '/src/utils/common.js'
+// import { loadImage, loadBackground } from '/src/utils/common'
+import { loadImage } from '@/utils/common'
+
+type ElBgData = {
+  loadedImages: Array<string>,
+  activeIndex: number,//-1, // 正在展示的图片下标 (loadedImages 的下标)
+  lastShow: string | null,  // '1' 或 '2'.  上一次显示的是背景图1 还是 背景图2
+
+  timer: NodeJS.Timer | null,
+}
 
 export default {
   props: {
-    urls: { type: Array, default: ()=>[] }, // 图片源
+    urls: { type: Array<string>, default: ()=>[] }, // 图片源
     interval: { type: Number, default: ()=> 10000 }, // 图片切换间隔， 默认10秒
     random: { type: Boolean, default: ()=> false }, // 随机切换图片
   },
   emits: [ 'beforeChange', 'changed' ],  // 背景图切换事件
   data() {
-    return {
+    let data : ElBgData = {
       loadedImages: [],
       activeIndex: -1, // 正在展示的图片下标 (loadedImages 的下标)
       lastShow: null,  // '1' 或 '2'.  上一次显示的是背景图1 还是 背景图2
 
       timer: null,
     }
+    return data
   },
   watch: {
     urls() {
@@ -56,7 +66,8 @@ export default {
           
           // 开启定时器
           if(!this.timer) {
-            this.changeBg(img, true) // 定时器不会立即执行，所以手动执行第一次
+            // this.changeBg(img, true) // 定时器不会立即执行，所以手动执行第一次
+            this.changeBg(true)
             this.setupTimer()
           }
 
@@ -84,21 +95,21 @@ export default {
      * @param isFirst 是否是第一次加载，urls 发生
      * 
      *  */ 
-    changeBg(isFirst) {
+    changeBg(isFirst:boolean = false) {
       if(!isFirst  &&  this.loadedImages?.length 
           && this.loadedImages?.length <= 1) {
         return
       }
 
-      const bg_1 = this.$refs.mainBg_1
-      const bg_2 = this.$refs.mainBg_2
+      const bg_1 : any = this.$refs.mainBg_1
+      const bg_2 : any = this.$refs.mainBg_2
 
       if(this.activeIndex<0 || this.activeIndex>=this.loadedImages.length-1) {
         this.activeIndex = 0
       } else {
         if(this.random && this.loadedImages.length>1) {
-          let rindex = Math.random()*this.loadedImages.length
-          rindex = parseInt(rindex)
+          let rindex : number = Math.random()*this.loadedImages.length
+          rindex = parseInt(rindex+"")
           this.activeIndex = rindex
         } else {
           this.activeIndex++

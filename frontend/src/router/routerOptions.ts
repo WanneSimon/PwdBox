@@ -1,6 +1,7 @@
 // const componentModules = import.meta.globEager('/src/views/**/*.vue') // 立即引入
 const componentModules = import.meta.glob('/src/views/**/*.vue') // 懒加载
 
+import { RouteRecordRaw } from 'vue-router'
 // import Hello2 from '/src/views/manage/hello.vue'
 import EmptyView from '/src/views/components/empty-view.vue'
 
@@ -19,17 +20,17 @@ import EmptyView from '/src/views/components/empty-view.vue'
 const MANAGE_ROOT = import.meta.env.VITE_MANAGE_ROOT
 // console.log("MANAGE_ROOT", MANAGE_ROOT)
 
-function _importView(_path){
+function _importView(_path:string){
   return componentModules[`/src/views/${_path}`]
 }
-function _importFrontView(_path){
+function _importFrontView(_path:string){
   return componentModules[`/src/views/front/${_path}`]
 }
-function _import(_path){
+function _import(_path:string){
   return componentModules[`/src/${_path}`]
 }
 
-const routes = [
+const routes :Array<RouteRecordRaw> = [
     { path: '/', redirect: '/home3' },
     { path: '/index', redirect: '/home3' },
     { path: '/home', redirect: '/home3' },

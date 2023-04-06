@@ -1,10 +1,12 @@
-import { SaveConfig, FileOp, Config } from "/wailsjs/index.js"
+// import { SaveConfig, FileOp, Config } from "/wailsjs/index.js"
+import { SaveConfig, FileOp, Config } from "@/../wailsjs/index"
+
 
 export default {
   name: 'Emoji',
   components: { },
   emit: [ "saved", "close" ],
-  inject: [ "Message" ],
+  inject: [ "Message", "Noti" ],
   data () {
     return {
       config: null,
@@ -66,10 +68,12 @@ export default {
       let re = await SaveConfig(this.config).then(res => res)
       // console.log("Save", re)
       if(re) {
-        this.Message.success("保存成功")
+        // this.Message.success("保存成功")
+        this.Noti.success({ message: "保存成功", position: 'bottom-right',})
         this.$emit("saved") // 不刷新自己组件的信息
       } else {
-        this.Message.error("保存失败")
+        // this.Message.error("保存失败")
+        this.Noti.error({ message: "保存失败", position: 'bottom-right',})
       }
     },
 

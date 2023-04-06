@@ -1,5 +1,5 @@
 import axios from 'axios'
-import globalStore from '/src/components/pinia/store.js'
+import globalStore from '@/components/pinia/store'
 
 const SUCCESS_CODE = "00"
 // const storeProvider = () => {

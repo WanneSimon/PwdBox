@@ -1,6 +1,6 @@
 import axios from 'axios'
-import MetaHeader from '/src/components/vue-meta/meta-header.vue'
-import ElementBg from '/src/views/components/bg/element-bg.vue'
+import MetaHeader from '@/components/vue-meta/meta-header.vue'
+import ElementBg from '@/views/components/bg/element-bg.vue'
 
 let baseUrl = import.meta.env.VITE_FRONT_BASE
 baseUrl = baseUrl ? baseUrl : ''

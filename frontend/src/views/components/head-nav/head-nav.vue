@@ -30,30 +30,24 @@
   </div>
 </template>
 
-<script>
-import { Exit, Minimises } from "/wailsjs/index.js"
+<script setup lang="ts" >
+// import { Exit, Minimises } from "/wailsjs/index"
+import { Exit, Minimises } from "@/../wailsjs/index"
 import { Minus, Close, ArrowLeftBold } from '@element-plus/icons-vue'
+import { getCurrentInstance } from "vue"
+import { useRouter } from "vue-router"
 
-export default {
-    name: 'HeadNav',
-    components: { Minus, Close, ArrowLeftBold },
-    data () {
-        return {
-            
-        }
-    },
+const router = useRouter()
 
-    methods: {
-      goBack() {
-        this.$router.back()
-      },
-      exit() {
-        Exit()
-      },
-      min(){
-        Minimises()
-      }
-    }
+const goBack = () => {
+  // this.$router.back()
+  router.back()
+}
+const exit = () =>  {
+  Exit()
+}
+const min= () => {
+  Minimises()
 }
 </script>
 

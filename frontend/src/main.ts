@@ -37,7 +37,7 @@ app.directive('highlight',function (el) {
   */
 
   let blocks = el.querySelectorAll('code')
-  blocks.forEach((codeEl)=>{
+  blocks.forEach((codeEl:any)=>{ //HTMLElement
     let parentName = codeEl.parentNode?.tagName
     if(parentName && parentName.toLowerCase()=='pre') {
       // 这个方法会把代码块包裹成单独的一行
