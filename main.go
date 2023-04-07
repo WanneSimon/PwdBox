@@ -32,13 +32,15 @@ func main() {
 	// appConfig := strings.Join(rootPath, filepath.Separator, "config", filepath.Separator, "saya.yml")
 	sp := fmt.Sprintf("%c", filepath.Separator)
 	var appConfigPath = rootPath + sp + "config" + sp + "saya.yml"
-	appConfig := conf.LoadAppConfig(appConfigPath)
+	configOps := conf.NewConfigOpsAndLoad(appConfigPath)
+
+	appConfig := configOps.Get()
+
 	fmt.Println("appconfig", appConfig)
-	app.config = appConfig
 
 	// Create application with options
 	err := wails.Run(&options.App{
-		Title:     "saya-app",
+		Title:     appConfig.Title, //"saya-app",
 		Width:     1024,
 		Height:    768,
 		MinWidth:  930,
@@ -53,7 +55,7 @@ func main() {
 			fileOp.SetContext(ctx)
 		},
 		Bind: []interface{}{
-			app, fileOp,
+			app, fileOp, configOps,
 		},
 	})
 

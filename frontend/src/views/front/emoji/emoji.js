@@ -1,4 +1,5 @@
-import { Greet, FileOp, Config } from "@/../wailsjs/index"
+// import { Greet, FileOp, Config } from "@/../wailsjs/index"
+import { Greet, FileOp, ConfigOp } from "@/../wailsjs/index"
 // import byteString from '/src/utils/encrypt/byte-string.js'
 import EmojiConfig from "./emoji-config/emoji-config.vue"
 
@@ -36,7 +37,11 @@ export default {
 
     // 获取文件夹路径
     async getEmojiPath() {
-      let conf =  await Config().then(res => res)
+      // let conf =  await Config().then(res => res)
+      console.log("ConfigOp", ConfigOp)
+      let conf =  await ConfigOp.Get().then(res => res)
+      console.log("ConfigOp-after", conf)
+
       this.paths = conf.Emojis
       console.log("this.paths", this.paths)
       return this.paths

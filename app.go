@@ -7,13 +7,11 @@ import (
 	"os"
 
 	"github.com/wailsapp/wails/v2/pkg/runtime"
-	"github.com/wanneSimon/saya-app/conf"
 )
 
 // App struct
 type App struct {
-	ctx    context.Context
-	config conf.AppConfig
+	ctx context.Context
 }
 
 // NewApp creates a new App application struct
@@ -44,16 +42,4 @@ func (a *App) Exit() {
 
 func (a *App) Minimises() {
 	runtime.WindowMinimise(a.ctx)
-}
-
-func (a *App) Config() conf.AppConfig {
-	return a.config
-}
-
-func (a *App) SaveConfig(ac conf.AppConfig) bool {
-	if ac.SaveAppConfig() {
-		a.config = ac
-		return true
-	}
-	return false
 }

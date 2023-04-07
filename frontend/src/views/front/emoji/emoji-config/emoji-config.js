@@ -1,5 +1,5 @@
 // import { SaveConfig, FileOp, Config } from "/wailsjs/index.js"
-import { SaveConfig, FileOp, Config } from "@/../wailsjs/index"
+import { FileOp, ConfigOp } from "@/../wailsjs/index"
 
 
 export default {
@@ -22,7 +22,8 @@ export default {
     // 获取配置
     async getConfig() {
       this.loading = true
-      let conf =  await Config().then(res => res)
+      // let conf =  await Config().then(res => res)
+      let conf = await ConfigOp.Get()
 
       this.config = conf
       
@@ -65,7 +66,7 @@ export default {
     async saveConfig() {
       // console.log("saveConfig", this.config)
       this.config.Emojis = this.emojis.filter(e => e)
-      let re = await SaveConfig(this.config).then(res => res)
+      let re = await ConfigOp.SaveAppConfig(this.config).then(res => res)
       // console.log("Save", re)
       if(re) {
         // this.Message.success("保存成功")
