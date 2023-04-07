@@ -54,14 +54,15 @@ func main() {
 		BackgroundColour: &options.RGBA{R: 0, G: 0, B: 0, A: 255},
 		OnStartup: func(ctx context.Context) {
 			app.startup(ctx)
+			app.transparentWinOS(appConfig.Title)
 			fileOp.SetContext(ctx)
 		},
 		Bind: []interface{}{
 			app, fileOp, configOps,
 		},
 		Windows: &windows.Options{
-			WebviewIsTransparent:              true, // 透明
-			WindowIsTranslucent:               true, // 半透明
+			WebviewIsTransparent: true,
+			// WindowIsTranslucent:               true,
 			DisableWindowIcon:                 false,
 			DisableFramelessWindowDecorations: false,
 			WebviewUserDataPath:               "userdata",

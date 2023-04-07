@@ -3,9 +3,9 @@ export * from "./go/main/App";
 export * from "./runtime/runtime";
 
 import * as FileOp from './go/env/FileOp'
-// import * as AppConfig from './go/config/AppConfig'
+import * as ConfigOp from './go/conf/ConfigOps'
 
 export {
-  FileOp, 
+  FileOp, ConfigOp
 }
 

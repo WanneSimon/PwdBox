@@ -5,7 +5,9 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"syscall"
 
+	"github.com/lxn/win"
 	"github.com/wailsapp/wails/v2/pkg/runtime"
 )
 
@@ -42,4 +44,10 @@ func (a *App) Exit() {
 
 func (a *App) Minimises() {
 	runtime.WindowMinimise(a.ctx)
+}
+
+// 让窗口完全透明化
+func (a *App) transparentWinOS(title string) {
+	hwnd := win.FindWindow(nil, syscall.StringToUTF16Ptr(title))
+	win.SetWindowLong(hwnd, win.GWL_EXSTYLE, win.GetWindowLong(hwnd, win.GWL_EXSTYLE)|win.WS_EX_LAYERED)
 }
