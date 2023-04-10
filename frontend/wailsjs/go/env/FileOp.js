@@ -9,3 +9,15 @@ export function List(arg1) {
 export function ListImage(arg1) {
   return window['go']['env']['FileOp']['ListImage'](arg1);
 }
+
+export function Open(arg1) {
+  return window['go']['env']['FileOp']['Open'](arg1);
+}
+
+export function SelectFolder(arg1) {
+  return window['go']['env']['FileOp']['SelectFolder'](arg1);
+}
+
+export function SetContext(arg1) {
+  return window['go']['env']['FileOp']['SetContext'](arg1);
+}
