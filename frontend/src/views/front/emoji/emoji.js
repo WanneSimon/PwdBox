@@ -120,6 +120,7 @@ export default {
     // 复制到截切版
     async copyToClipboard(item) {
       // 截掉 url 开头的部分 'data:image/jpg;base64,'
+      console.log("item", item)
       let base64Data = item._url.substring(item._pre.length)
 
       // 用 'image/png' 梭哈，格式太多可能不支持
@@ -136,6 +137,91 @@ export default {
         ia[i] = bytes.charCodeAt(i);
       }
       return new Blob([ab], { type: type });
+    },
+
+    // 查看剪切板的内容
+    loadClipboard() {
+      navigator.clipboard.read().then(res => {
+        console.log("loadClipboard", res)
+        let citem = res[0]
+        console.log("citem", citem)
+        console.log("types", citem.types)
+
+        for(let i=0; i<citem.types.length; i++) {
+          let type = citem.types[i]
+          citem.getType(type).then(data => {
+            // console.log(type, data)
+
+            if(type.startsWith('text/')) {
+              let reader = new FileReader()
+              reader.onload = () => {
+                console.log(type, reader.result)
+              }
+              reader.readAsBinaryString(data)
+            } else {
+              console.log(type, data)
+            }
+
+          })
+        }
+      })
+    },
+    async testCpClipboard() {
+      let el = document.getElementById('test-img')
+      let canvas = this.convertImageTagToCanvas(el)
+      let base64PNG = canvas.toDataURL("image/png")
+
+      // await this.imageToBlob(el.src, (blobData) => {
+        // let canvas = this.convertImageTagToCanvas(el)
+        // canvas.toBlob((blob) => { 
+        //   console.log("blobData", blobData)
+        //   // IE复制动图的时候
+        //   let testItem = new ClipboardItem({ 
+        //     'image/png': blobInput, //blobData,
+        //     'text/plain': encodeURIComponent(el.src), // 文件 url
+        //     'text/html': el.outerHTML, // 被复制图片的原生 html
+        //   })
+        //   navigator.clipboard.write([testItem]);
+        // }, "image/png", 1.0);  
+
+        // blobData = canvas.toDataURL("image/png");  
+
+        console.log("blobData", base64PNG)
+        const blobData = this.convertBase64ToBlob(base64PNG, 'image/png');
+              // IE复制动图的时候
+        let testItem = new ClipboardItem({ 
+          'image/png': blobData,
+          'text/plain': encodeURIComponent(el.src), // 文件 url
+          'text/html': el.outerHTML, // 被复制图片的原生 html
+        })
+        navigator.clipboard.write([testItem]);
+        
+      // })
+    },
+    // url img地址，图片地址如果是网络图片，网络地址需要处理跨域
+    // fn  函数，返回一个blob对象
+    imageToBlob (url, fn) {
+      if (!url || !fn) return false;
+      var xhr = new XMLHttpRequest();
+      xhr.open('get', url, true);
+      xhr.responseType = 'blob';
+      xhr.onload = function () {
+        // 注意这里的this.response 是一个blob对象 就是文件对象
+        fn(this.status == 200 ? this.response : false);
+      }
+      xhr.send();
+      return true;
+    },
+    // 把image 转换为 canvas对象  
+    convertImageTagToCanvas(image) {  
+      image.setAttribute("crossOrigin",'Anonymous')
+      // 创建canvas DOM元素，并设置其宽高和图片一样   
+      var canvas = document.createElement("canvas");  
+      canvas.width = image.width;  
+      canvas.height = image.height;  
+      // 坐标(0,0) 表示从此处开始绘制，相当于偏移。  
+      canvas.getContext("2d").drawImage(image, 0, 0);    
+      return canvas;  
     },
 
   }

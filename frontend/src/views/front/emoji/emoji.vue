@@ -6,9 +6,12 @@
           placeholder="文件名" @keydown.enter.native="searchClick" />
       <el-button @click="searchClick">搜索</el-button>
       <el-button @click="showConfig=true">设置</el-button>
+      <el-button @click="loadClipboard">测试</el-button>
+      <el-button @click="testCpClipboard">测试复制</el-button>
       
       <div class="content ">
-        
+        <img id="test-img" tabindex="0" class=" nofocus" style="width: 200px;height:100px" aria-label="狐狸动图gif|UI|其他UI |siwuxie123_原创作品-站酷ZCOOL" alt="狐狸动图gif|UI|其他UI |siwuxie123_原创作品-站酷ZCOOL" src="https://img.zcool.cn/community/01d3f15adfe979a801214a617e684e.gif">
+
         <el-scrollbar class="images " height=" calc( 100% - 6rem ) "  
             v-loading="loading" element-loading-background="rgba(0,0,0,0.2)">
           <div v-show="files && files.length>0" style="width:100%">
