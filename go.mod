@@ -3,6 +3,7 @@ module github.com/wanneSimon/saya-app
 go 1.18
 
 require (
+	github.com/kbinani/screenshot v0.0.0-20210720154843-7d3a670d8329
 	github.com/lxn/win v0.0.0-20210218163916-a377121e959e
 	github.com/shamsher31/goimgtype v1.0.0
 	github.com/wailsapp/wails/v2 v2.4.1
@@ -15,8 +16,7 @@ require (
 	github.com/go-ole/go-ole v1.2.6 // indirect
 	github.com/google/uuid v1.1.2 // indirect
 	github.com/jchv/go-winloader v0.0.0-20210711035445-715c2860da7e // indirect
-	github.com/jezek/xgb v0.0.0-20210312150743-0e0f116e1240 // indirect
-	github.com/kbinani/screenshot v0.0.0-20210720154843-7d3a670d8329 // indirect
+	github.com/jezek/xgb v1.0.0 // indirect
 	github.com/labstack/echo/v4 v4.9.0 // indirect
 	github.com/labstack/gommon v0.3.1 // indirect
 	github.com/leaanthony/go-ansi-parser v1.0.1 // indirect
@@ -36,7 +36,7 @@ require (
 	golang.org/x/exp v0.0.0-20220303212507-bbda1eaf7a17 // indirect
 	golang.org/x/net v0.7.0 // indirect
 	golang.org/x/sys v0.5.0 // indirect
-	golang.org/x/text v0.7.0 // indirect
+	golang.org/x/text v0.8.0 // indirect
 )
 
 // replace github.com/wailsapp/wails/v2 v2.4.1 => C:\Users\Administrator\go\pkg\mod

@@ -38,12 +38,12 @@ export default {
     // 获取文件夹路径
     async getEmojiPath() {
       // let conf =  await Config().then(res => res)
-      console.log("ConfigOp", ConfigOp)
+      // console.log("ConfigOp", ConfigOp)
       let conf =  await ConfigOp.Get().then(res => res)
       console.log("ConfigOp-after", conf)
 
       this.paths = conf.Emojis
-      console.log("this.paths", this.paths)
+      // console.log("this.paths", this.paths)
       return this.paths
     },
     refreshConfig() {
@@ -72,25 +72,15 @@ export default {
           fsFiltered = fs.filter(e => e.name.indexOf(name) != -1)
         }
 
-        let limit = 99999999
-        for(let k=0; k< fsFiltered.length && k<limit ; k++) {
-          await this.loadFileData(fsFiltered, k, arr)
-          /*
-          let item = fsFiltered[k]
-          item._pre = null
-          item._url = null
-
-          FileOp.Open(item.path).then(res => {
-            let ext = item.ext
-            ext = ext && ext.length>0 ? ext.substring(1) : ""
-      
-            item._pre = "data:image/"+ext+";base64,"
-            item._url =  item._pre+ res
-          })
-          arr.push(item)
-          */
-        }
+        // 不需要加载 base64 了
+        // let limit = 99999999
+        // for(let k=0; k< fsFiltered.length && k<limit ; k++) {
+        //   await this.loadFileData(fsFiltered, k, arr)
+        // }
+        arr = arr.concat(fsFiltered)
       }
+
+      console.log("fsFiltered", arr)
 
       this.files = arr
       this.loading = false
@@ -100,7 +90,7 @@ export default {
       this.searchByName(this.name)
     },
 
-    // 将文件用 base64 的形式读取
+    // 将文件用 base64 的形式读取，读取成功则放入新的数组中
     async loadFileData(arr, index, newArr) {
       let item = arr[index]
       let data = await FileOp.Open(item.path).then(res => res)
@@ -117,16 +107,53 @@ export default {
       newArr.push(item)
     },
 
-    // 复制到截切版
-    async copyToClipboard(item) {
+    // 复制到截切版（全部走 windows.selection API ）
+    async copyToClipboard(item, domId) {
+      // if(item.ext == '.webp') { // 不支持
+      //   this.copyToClipboardStaticImage(item)
+      //   return
+      // }
+
+      // let el = document.querySelector('#'+domId+' .el-image')
+      let el = document.querySelector('#'+domId).parentNode
+      // console.log("el", el)
+      this.copyToClipboardByParentId(el)
+
+      // console.log("item", item)
+      // if(item.ext == '.gif') {
+      //   // let el = document.getElementById(domId).parentNode
+      //   let el = document.querySelector('#'+domId+' .el-image')
+      //   console.log("el", el)
+      //   this.copyToClipboardByParentId(el)
+      // } else {
+      //   this.copyToClipboardStaticImage(item)
+      // }
+      
+    },
+    async copyToClipboardStaticImage(item) {
       // 截掉 url 开头的部分 'data:image/jpg;base64,'
-      console.log("item", item)
+      // console.log("item", item)
       let base64Data = item._url.substring(item._pre.length)
 
       // 用 'image/png' 梭哈，格式太多可能不支持
       const blobInput = this.convertBase64ToBlob(base64Data, 'image/png');
       const clipboardItemInput = new ClipboardItem({ 'image/png': blobInput });
       navigator.clipboard.write([clipboardItemInput]);
+    },
+    copyToClipboardByParentId(parentEl) {
+      // let el = document.getElementById('test-img')
+      let el = parentEl
+      // 使用 selectionAPI
+      let range = document.createRange()
+      // 只有一个元素，所以元素左右坐标分别是 0 和 1
+      range.setStart(el, 0) 
+      range.setEnd(el, 1)
+
+      let selection = window.getSelection()
+      selection.removeAllRanges()  // FireFox 下按住ctrl 支持多选区
+      selection.addRange(range)
+      document.execCommand('copy')
+      selection.removeAllRanges()
     },
     // base64 转Blob 对象
     convertBase64ToBlob(base64, type) {
@@ -167,36 +194,20 @@ export default {
       })
     },
     async testCpClipboard() {
-      let el = document.getElementById('test-img')
-      let canvas = this.convertImageTagToCanvas(el)
-      let base64PNG = canvas.toDataURL("image/png")
+      // let el = document.getElementById('test-img')
+      let el = document.getElementById('test-img-wrapper')
+      this.copyToClipboardByParentId(el)
+      // // 使用 selectionAPI
+      // let range = document.createRange()
+      // // 只有一个元素，所以元素左右坐标分别是 0 和 1
+      // range.setStart(el, 0) 
+      // range.setEnd(el, 1)
 
-      // await this.imageToBlob(el.src, (blobData) => {
-        // let canvas = this.convertImageTagToCanvas(el)
-        // canvas.toBlob((blob) => { 
-        //   console.log("blobData", blobData)
-        //   // IE复制动图的时候
-        //   let testItem = new ClipboardItem({ 
-        //     'image/png': blobInput, //blobData,
-        //     'text/plain': encodeURIComponent(el.src), // 文件 url
-        //     'text/html': el.outerHTML, // 被复制图片的原生 html
-        //   })
-        //   navigator.clipboard.write([testItem]);
-        // }, "image/png", 1.0);  
-
-        // blobData = canvas.toDataURL("image/png");  
-
-        console.log("blobData", base64PNG)
-        const blobData = this.convertBase64ToBlob(base64PNG, 'image/png');
-              // IE复制动图的时候
-        let testItem = new ClipboardItem({ 
-          'image/png': blobData,
-          'text/plain': encodeURIComponent(el.src), // 文件 url
-          'text/html': el.outerHTML, // 被复制图片的原生 html
-        })
-        navigator.clipboard.write([testItem]);
-        
-      // })
+      // let selection = window.getSelection()
+      // selection.removeAllRanges()  // FireFox 下按住ctrl 支持多选区
+      // selection.addRange(range)
+      // document.execCommand('copy')
+      // selection.removeAllRanges()
     },
     // url img地址，图片地址如果是网络图片，网络地址需要处理跨域
     // fn  函数，返回一个blob对象
@@ -217,10 +228,24 @@ export default {
       image.setAttribute("crossOrigin",'Anonymous')
       // 创建canvas DOM元素，并设置其宽高和图片一样   
       var canvas = document.createElement("canvas");  
+      document.body.appendChild(canvas) 
       canvas.width = image.width;  
       canvas.height = image.height;  
+      // console.log("image", image)
+      image.onload = () => {
+        console.log("image loaded")
+        // 坐标(0,0) 表示从此处开始绘制，相当于偏移。  第一次，图片加载后才有能绘制
+        ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+      }
+      
+      var ctx = canvas.getContext("2d")
+      ctx.fillStyle = 'black'
+      ctx.fillRect(0,0, image.width, image.height)
+
       // 坐标(0,0) 表示从此处开始绘制，相当于偏移。  
-      canvas.getContext("2d").drawImage(image, 0, 0);    
+      // 图片加载后就能直接绘制
+      ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+      // document.body.removeChild(canvas)    
       return canvas;  
     },
 
