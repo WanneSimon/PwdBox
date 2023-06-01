@@ -14,6 +14,7 @@ var tag string
 
 const HAND_SHAKE_MSG = "NAT MESSAGE"
 
+/** 连接中间服务，并尝试 p2p。 可以封装自动重试功能 */
 func TryConnect(localAddr net.UDPAddr, serverAddr net.UDPAddr, isHost bool, token string) {
 	// 当前进程标记字符串,便于显示
 	tag = os.Args[1]
@@ -24,7 +25,8 @@ func TryConnect(localAddr net.UDPAddr, serverAddr net.UDPAddr, isHost bool, toke
 
 	conn, err := net.DialUDP("udp", srcAddr, dstAddr)
 	if err != nil {
-		fmt.Println(err)
+		// fmt.Println(err)
+		log.Panic(err)
 	}
 
 	// dataStr := "hello, I'm new peer:" + tag
@@ -33,22 +35,34 @@ func TryConnect(localAddr net.UDPAddr, serverAddr net.UDPAddr, isHost bool, toke
 		dataStr = "client:" + token
 	}
 
+	// 向中间服务发送 token
 	if _, err = conn.Write([]byte(dataStr)); err != nil {
 		log.Panic(err)
 	}
+
+	// 等待中间服务返回另一个端点的信息
 	data := make([]byte, 1024)
 	n, remoteAddr, err := conn.ReadFromUDP(data)
 	if err != nil {
 		fmt.Printf("error during read: %s", err)
+		log.Panic(err)
 	}
 	conn.Close()
-	anotherPeer := parseAddr(string(data[:n]))
-	fmt.Printf("local:%s server:%s another:%s\n", srcAddr, remoteAddr, anotherPeer.String())
 
-	// 开始打洞
-	bidirectionHole(srcAddr, &anotherPeer)
+	// 检查中间服务是否返回错误
+	reData := string(data[:n])
+	if strings.HasPrefix(reData, "error:") {
+		log.Panic(reData[6:])
+	} else {
+		anotherPeer := parseAddr(reData)
+		fmt.Printf("local:%s server:%s another:%s\n", srcAddr, remoteAddr, anotherPeer.String())
+
+		// 开始打洞
+		bidirectionHole(srcAddr, &anotherPeer)
+	}
 }
 
+/** 字符串IP转对象 */
 func parseAddr(addr string) net.UDPAddr {
 	t := strings.Split(addr, ":")
 	port, _ := strconv.Atoi(t[1])
@@ -58,6 +72,7 @@ func parseAddr(addr string) net.UDPAddr {
 	}
 }
 
+/** 打洞 */
 func bidirectionHole(srcAddr *net.UDPAddr, anotherAddr *net.UDPAddr) {
 	conn, err := net.DialUDP("udp", srcAddr, anotherAddr)
 	if err != nil {
@@ -82,11 +97,12 @@ func bidirectionHole(srcAddr *net.UDPAddr, anotherAddr *net.UDPAddr) {
 	// 接收
 	for {
 		data := make([]byte, 1024)
-		n, _, err := conn.ReadFromUDP(data)
+		n, addr, err := conn.ReadFromUDP(data)
 		if err != nil {
 			log.Printf("error during read: %s\n", err)
 		} else {
 			log.Printf("收到数据:%s\n", data[:n])
+			log.Println("对方地址：" + addr.IP.String() + ":" + strconv.Itoa(addr.Port))
 		}
 	}
 }
