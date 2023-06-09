@@ -8,6 +8,8 @@ import (
 	"time"
 )
 
+// This File is only for test
+
 // https://blog.csdn.net/Jailman/article/details/122702807
 type PeerTunnel struct {
 	Host  net.UDPAddr // host 主机

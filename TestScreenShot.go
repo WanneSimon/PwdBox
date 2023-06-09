@@ -10,6 +10,8 @@ import (
 	"github.com/kbinani/screenshot"
 )
 
+// This File is only for test
+
 func TestSC() {
 	num := screenshot.NumActiveDisplays()
 	if num <= 0 {

@@ -10,6 +10,8 @@ import (
 	"time"
 )
 
+// This File is only for test
+
 var tag string
 
 const HAND_SHAKE_MSG = "NAT MESSAGE"
