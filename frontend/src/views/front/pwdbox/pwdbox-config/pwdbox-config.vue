@@ -24,7 +24,7 @@
   </div>
 </template>
 
-<script src="./emoji-config.js"></script>
+<script src="./pwdbox-config.js"></script>
 
 <style scoped lang="scss">
 

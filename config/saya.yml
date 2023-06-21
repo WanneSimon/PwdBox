@@ -1,5 +1,4 @@
+title: 'saya' 
 debug: true
 frameless: true
-emojis:
-    - G:\Q图MessicPictures
-    - G:\Q图MessicPictures\奇趣
+pwdbox: 'config/pwdbox.db3'

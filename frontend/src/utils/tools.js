@@ -175,3 +175,59 @@ export function drageElements(els, parentEl) {
 
 }
 
+/**
+ * 掩盖手机号中间4位
+ * @param {*} phone 
+ */
+ export function maskPhone(phone) {
+  if(!phone) {
+    return
+  }
+
+  let part1 = ''
+  let part2 = '******'
+  let part3 = ''
+
+  let start = 0
+  let end = phone.length
+  if(phone.startsWith('+00') || phone.startsWith('+86')) {
+    end = phone.length > 6 ? 6 : phone.length
+  } else {
+    end = phone.length > 3 ? 3 : phone.length
+  }
+
+  part1 = phone.substr(start, end)
+  
+  let endStart = phone.length - 2;
+  if(endStart > end) {
+    part3 = phone.substr(endStart)
+  }
+
+  return part1+part2+part3
+}
+
+/** 掩盖真实姓名中的名 */
+export function maskName(name) {
+  if(name) {
+    return name.substring(0,1) + "**"
+  }
+  return name
+}
+
+/** 掩盖邮箱 */
+export function maskEmail(email) {
+  if(!email) {
+    return
+  }
+  
+  let atIndex = email.indexOf('@')
+  let minLen = 3
+  if(email.length <= minLen) {
+    return email
+  } 
+
+  let part1 = email.substr(0, minLen)
+  let part2 = '***'
+  let part3 = atIndex == email.length-1 ? '' : email.substr(atIndex, email.length)
+  return part1 + part2 + part3
+}

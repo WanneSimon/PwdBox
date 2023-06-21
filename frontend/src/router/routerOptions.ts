@@ -36,7 +36,7 @@ const routes :Array<RouteRecordRaw> = [
     { path: '/home', redirect: '/home3' },
     { path: '/home3', component: _importFrontView("home/home-v3.vue") },
     { path: '/tools', component: _importFrontView("tools/tools.vue") },
-    { path: '/emoji', component: _importFrontView("emoji/emoji.vue") },
+    { path: '/pwdbox', component: _importFrontView("pwdbox/pwdbox.vue") },
     { 
       path: '/tool',  component: EmptyView,
       children: [
@@ -45,13 +45,7 @@ const routes :Array<RouteRecordRaw> = [
           components: {
             default: _importFrontView('tools/live/live.vue')
           }
-        },
-        // 随机猫猫
-        { name: 'randomCats', path: 'cats',
-          components: {
-            default: _importFrontView('tools/the-cat-api/the-cat-api.vue')
-          }
-        },
+        }
       ]
     },
     // ========

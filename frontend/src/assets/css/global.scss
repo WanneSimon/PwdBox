@@ -9,7 +9,7 @@ body{
     min-width: 930px;
     min-height: 490px;
     // background-color: #fdfdfd;
-    background-color: rgba(0,0,0, 0.3);
+    background-color: rgba(0,0,0, 0.7);
 }
 
 .n-form-item-label{
@@ -98,41 +98,10 @@ body{
 */
 
 
-.icon-op {
-  font-size: 1rem;
-  .n-icon{
-    height: 1rem;
-    width: 1rem;
-    line-height: 1rem;
-    cursor: pointer;
-    color: #315eb1;
-    vertical-align: text-bottom;
-    margin-right: 0.4rem;
-  }
-}
 
 .icon-label{
   font-size: 1rem;
   margin: 0rem 0.2rem;
-
-  .n-icon{
-    height: 1.5rem;
-    width: 1.5rem;
-    line-height: 1.5rem;
-    cursor: pointer;
-    color: #45a187;
-    vertical-align: text-bottom;
-    margin-right: 0.4rem;
-
-    &:hover{
-      color: #a7673a;
-    }
-
-    svg{
-      height: 100%;
-      width: 100%;
-    }
-  }
 
   a{
     vertical-align: bottom;
@@ -142,4 +111,40 @@ body{
       color: #a7673a;
     }
   }
+}
+
+.inline-icon{
+  display: inline-flex;
+}
+.el-icon {
+  svg{
+    height: 100%;
+    width: 100%;
+  }
+}
+
+
+.ellipse-text-line {
+  display: -webkit-box;
+  /* autoprefixer: ignore next */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -webkit-line-clamp: 1;
+  text-overflow:ellipsis;  /*可选属性，可以用来多行文本的情况下，用省略号“…”隐藏超出范围的文本。 */
+}
+.ellipse-text {
+  display: -webkit-box;
+  /* autoprefixer: ignore next */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  text-overflow:ellipsis;  /*可选属性，可以用来多行文本的情况下，用省略号“…”隐藏超出范围的文本。 */
+}
+
+
+.form-buttons{
+  border-top: 1px solid #afafaf;
+  margin-top: 0.4rem;
+  padding-top: 0.3rem;
+  text-align: right;
 }

@@ -86,12 +86,6 @@ export default {
           "desc": "b站开源库-flv.js，拉取视频流和直播流",
           "inner": true
         },
-        {
-          "name": "随机猫猫",
-          "link": baseUrl + "/tool/cats",
-          "desc": "thecatapi开放的随机猫猫接口",
-          "inner": true
-        }
       ]
     },
 

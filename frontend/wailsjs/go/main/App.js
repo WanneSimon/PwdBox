@@ -17,3 +17,7 @@ export function Greet(arg1) {
 export function Minimises() {
   return window['go']['main']['App']['Minimises']();
 }
+
+export function OpenUrl(arg1) {
+  return window['go']['main']['App']['OpenUrl'](arg1);
+}

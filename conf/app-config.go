@@ -16,7 +16,7 @@ type AppConfig struct {
 	Debug     bool   `yaml:"debug" json:"Debug"`         // debug 模式
 	Frameless bool   `yaml:"frameless" json:"Frameless"` // 无边框
 
-	Emojis []string `yaml:"emojis" json:"Emojis"` // 图片路径
+	Pwdbox string `yaml:"pwdbox" json:"pwdbox"` // 保险箱路径
 }
 
 // app 的全局配置对象
@@ -38,7 +38,7 @@ func DefaultAppConfig() AppConfig {
 		Title:     "saya-app",
 		Debug:     false,
 		Frameless: true,
-		Emojis:    []string{},
+		Pwdbox:    "config/pwdbox.db3",
 	}
 }
 

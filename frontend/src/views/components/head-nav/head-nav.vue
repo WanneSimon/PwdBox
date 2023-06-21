@@ -1,13 +1,21 @@
 <template>
-  <div class="nav-head float-block" style="--wails-draggable: drag">
+  <div class="nav-head float-block fixed-nav-head" style="--wails-draggable: drag">
       <label class="icon-label">
         <router-link :to="'/home'" title="Home" target="self">
           <el-button size="small" color="#626aef">Home</el-button>
         </router-link>
       </label>
+      <!--
       <label class="icon-label">
         <router-link :to="'/emoji'" title="Emoji">
           <el-button size="small" color="#626aef">Emoji</el-button>
+        </router-link>
+      </label>
+      -->
+      <!--       -->
+      <label class="icon-label" title="保险箱">
+        <router-link :to="'/pwdbox'">
+          <el-button size="small" color="#626aef"> 保险箱</el-button>
         </router-link>
       </label>
       <label class="icon-label" title="小工具">
@@ -15,7 +23,8 @@
           <el-button size="small" color="#626aef"> 小工具</el-button>
         </router-link>
       </label>
-    
+
+
       <label class="right-pos">
         <!-- <el-button size="small" type="warning" @click="min" :icon="'Minus'">最小化</el-button>
         <el-button size="small" type="warning" @click="exit" :icon="'Close'">退出</el-button>
@@ -79,6 +88,10 @@ const min= () => {
   }
 }
 
+.fixed-nav-head{
+  position: fixed;
+  z-index: 2023;  // 比 ElModal 高一点点
+}
 :deep(.el-button+.el-button) {
   margin-left: 1px;
 }

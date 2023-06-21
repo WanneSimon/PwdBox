@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"os/exec"
+	sysRuntime "runtime"
 	"syscall"
 
 	"github.com/lxn/win"
@@ -50,4 +52,22 @@ func (a *App) Minimises() {
 func (a *App) transparentWinOS(title string) {
 	hwnd := win.FindWindow(nil, syscall.StringToUTF16Ptr(title))
 	win.SetWindowLong(hwnd, win.GWL_EXSTYLE, win.GetWindowLong(hwnd, win.GWL_EXSTYLE)|win.WS_EX_LAYERED)
+}
+
+// 不同平台启动指令不同 https://www.lmlphp.com/user/365130/article/item/8221378
+var OpenLinkCommands = map[string]string{
+	"windows": "start",
+	"darwin":  "open",
+	"linux":   "xdg-open",
+}
+
+func (a *App) OpenUrl(uri string) error {
+	// runtime.GOOS获取当前平台
+	run, ok := OpenLinkCommands[sysRuntime.GOOS]
+	if !ok {
+		return fmt.Errorf("don't know how to open things on %s platform", sysRuntime.GOOS)
+	}
+
+	cmd := exec.Command(run, uri)
+	return cmd.Run()
 }

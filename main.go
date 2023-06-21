@@ -19,6 +19,7 @@ import (
 	// "github.com/wailsapp/wails/v2/pkg/runtime"
 	"github.com/wanneSimon/saya-app/conf"
 	"github.com/wanneSimon/saya-app/env"
+	"github.com/wanneSimon/saya-app/internal/pwdbox"
 )
 
 //go:embed all:frontend/dist
@@ -27,7 +28,9 @@ var assets embed.FS
 func main() {
 	// Create an instance of the app structure
 	app := NewApp()
-	fileOp := &env.FileOp{}
+	fileOp := env.FileOp{}
+
+	dbop := pwdbox.DbOp{}
 
 	// configs
 	var rootPath string = GetCurrentAbPath()
@@ -39,7 +42,7 @@ func main() {
 
 	appConfig := configOps.Get()
 
-	fmt.Println("appconfig", appConfig)
+	// fmt.Println("appconfig", appConfig)
 
 	// Create application with options
 	err := wails.Run(&options.App{
@@ -47,7 +50,7 @@ func main() {
 		Width:     1024,
 		Height:    768,
 		MinWidth:  930,
-		MinHeight: 490,
+		MinHeight: 660,
 		Frameless: appConfig.Frameless,
 		AssetServer: &assetserver.Options{
 			Assets:  assets,
@@ -59,9 +62,12 @@ func main() {
 			app.startup(ctx)
 			app.transparentWinOS(appConfig.Title)
 			fileOp.SetContext(ctx)
+
+			pwdbox.InitSqlite(appConfig.Pwdbox)
 		},
 		Bind: []interface{}{
-			app, fileOp, configOps,
+			app, configOps, &fileOp, &dbop,
+			&(pwdbox.PlatformServiceInstance), &pwdbox.AccountServiceInstance,
 		},
 		Windows: &windows.Options{
 			WebviewIsTransparent: true,

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"https://raw.githubusercontent.com/zhuxiujia/GoMybatis/master/mybatis-3-mapper.dtd">
+<mapper>
+    <!-- maybe usefull -->
+    <resultMap id="BaseResultMap" tables="platform">
+        <id column="id" property="id" langType="int"/>
+        <result column="name" property="name" langType="string"/>
+        <result column="site" property="site" langType="string"/>
+        <result column="remark" property="remark" langType="string"/>
+        <result column="num" property="num" langType="string"/>
+        <result column="create_time" property="createTime" langType="string"/>
+    </resultMap>
+
+    <select id="Get">
+        select * from platform where id=#{id} order by num, create_time desc
+    </select>
+
+    <update id="Update">
+        update platform 
+        <set>
+            <if test="name !=null AND name !=''"> name = #{name}, </if>
+            <if test="site !=null AND site !=''"> site = #{site}, </if>
+            <if test="remark !=null AND remark !=''"> remark = #{remark}, </if>
+            <if test="num !=null AND num !=''"> num = #{num}, </if>
+            <if test="create_time !=null AND create_time !=''"> create_time = #{create_time}, </if>
+        </set>
+        where id = #{id}
+    </select>
+
+    <insert id="Save">
+        insert into platform (id, name, site, remark, num, create_time)
+        values (#{id}, #{name}, #{site}, #{remark}, #{num}, #{create_time})
+    </insert>
+
+    <delete id="Delete">
+        delete from platform where id=#{id}
+    </delete>
+
+    <select id="MaxNum">
+        select max(num) from platform
+    </select>
+
+    <select id="List">
+        select * from platform 
+        <where>
+            <if test="name !=null AND name !=''"> 
+                name like '%'||#{name}||'%'
+                OR site like '%'||#{name}||'%'
+            </if>
+        </where> 
+        order by num, create_time desc
+        limit #{start},#{offset}
+    </select>
+
+    <select id="Count">
+        select count(1) from platform 
+        <where>
+            <if test="name !=null AND name !=''"> 
+                name like '%'||#{name}||'%'
+                OR site like '%'||#{name}||'%'
+            </if>
+        </where> 
+    </select>
+
+</mapper>

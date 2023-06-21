@@ -7,6 +7,9 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import ElementPlus from 'unplugin-element-plus/vite'
+// auto-import-icon   https://github.com/sxzz/element-plus-best-practices/blob/db2dfc983ccda5570033a0ac608a1bd9d9a7f658/vite.config.ts#L21-L58
+// import Icons from "unplugin-icons/vite";
+// import IconsResolver from "unplugin-icons/resolver";
 
 const WEB_PORT = process.env.port || process.env.npm_config_port || "8048" // dev port
 // const basePath = import.meta.env.VITE_FRONT_BASE || ''
@@ -35,15 +38,29 @@ export default ({mode}) => {
       // viteCompression(),
       // 按需引入
       AutoImport({
-        resolvers: [ElementPlusResolver()],
+        resolvers: [
+          ElementPlusResolver(), 
+          // IconsResolver({
+          //   prefix: "Icon"
+          // })
+        ],
       }),
       Components({
-        resolvers: [ElementPlusResolver()],
+        resolvers: [
+          ElementPlusResolver(),
+          // 自动注册图标组件
+          // IconsResolver({
+          //   enabledCollections: ['ep'],
+          // }),
+        ],
       }),
       // 样式
       ElementPlus({
         useSource: true,
       }),
+      // Icons({
+      //   autoInstall: true
+      // })
     ],
     resolve: {
       alias: {

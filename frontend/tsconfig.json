@@ -19,6 +19,6 @@
       "@/*": ["src/*"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "src/api/cookie_api.js", "src/api/cookie_api.js", "src/views/front/emoji/emoji.js", "src/views/front/emoji/emoji.js"],
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "src/api/cookie_api.js", "src/api/cookie_api.js", "src/views/front/pwdbox/emoji.js", "src/views/front/pwdbox/emoji.js", "src/views/front/pwdbox/pwdbox.js"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

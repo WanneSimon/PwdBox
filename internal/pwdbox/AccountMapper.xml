@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"https://raw.githubusercontent.com/zhuxiujia/GoMybatis/master/mybatis-3-mapper.dtd">
+<mapper>
+    <!-- maybe usefull -->
+    <resultMap id="BaseResultMap" tables="account">
+        <id column="id" property="id" langType="int"/>
+        <result column="platform_id" property="platformId" langType="string"/>
+        <result column="username" property="username" langType="string"/>
+        <result column="password" property="password" langType="string"/>
+        <result column="phone" property="phone" langType="string"/>
+        <result column="email" property="email" langType="string"/>
+        <result column="remark"  property="remark" langType="string"/>
+        <result column="create_time" property="createTime" langType="string"/>
+    </resultMap>
+
+    <select id="Get">
+        select * from account where id=#{id} order by create_time desc
+    </select>
+
+    <update id="Update">
+        update account 
+        <set>
+            <if test="platform_id !=null AND platform_id !=''"> platform_id = #{platform_id}, </if>
+            <if test="username !=null AND username !=''"> username = #{username}, </if>
+            <if test="password !=null AND password !=''"> password = #{password}, </if>
+            <if test="phone !=null AND phone !=''"> phone = #{phone}, </if>
+            <if test="email !=null AND email !=''"> email = #{email}, </if>
+            <if test="remark !=null AND remark !=''"> remark = #{remark}, </if>
+            <if test="create_time !=null AND create_time !=''"> create_time = #{create_time}, </if>
+        </set>
+        where id = #{id}
+    </select>
+
+    <insert id="Save">
+        insert into account (id, platform_id, username, password, phone, email, remark, create_time)
+        values (#{id}, #{platform_id}, #{username}, #{password}, #{phone}, #{email}, #{remark}, #{platform_id})
+    </insert>
+
+    <delete id="Delete">
+        delete from account where id=#{id}
+    </delete>
+
+    <select id="List">
+        select * from account 
+        <where>
+            <if test="platform_id !=null AND platform_id !=''"> 
+                platform_id = #{platform_id}
+            </if>
+            <trim prefix="AND (" suffix=")" suffixOverrides="" prefixOverrides="">
+                <if test="username !=null AND username !=''"> 
+                    username like '%'||#{username}||'%'
+                </if>
+                <if test="phone !=null AND phone !=''"> 
+                    OR phone like '%'||#{phone}||'%'
+                </if>
+                <if test="email !=null AND email !=''"> 
+                    OR email like '%'||#{email}||'%'
+                </if>
+            </trim>
+        </where> 
+        order by create_time desc
+        limit #{start},#{offset}
+    </select>
+    
+    <select id="Count">
+        select count(1) from account 
+        <where>
+            <if test="platform_id !=null AND platform_id !=''"> 
+                platform_id = #{platform_id}
+            </if>
+            <trim prefix="AND (" suffix=")" suffixOverrides="" prefixOverrides="">
+                <if test="username !=null AND username !=''"> 
+                    username like '%'||#{username}||'%'
+                </if>
+                <if test="phone !=null AND phone !=''"> 
+                    OR phone like '%'||#{phone}||'%'
+                </if>
+                <if test="email !=null AND email !=''"> 
+                    OR email like '%'||#{email}||'%'
+                </if>
+            </trim>
+        </where> 
+    </select>
+
+</mapper>
