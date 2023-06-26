@@ -17,8 +17,8 @@ import (
 	"github.com/wailsapp/wails/v2/pkg/options/windows"
 
 	// "github.com/wailsapp/wails/v2/pkg/runtime"
-	"github.com/wanneSimon/saya-app/conf"
-	"github.com/wanneSimon/saya-app/env"
+	"github.com/wanneSimon/saya-app/internal/conf"
+	"github.com/wanneSimon/saya-app/internal/env"
 	"github.com/wanneSimon/saya-app/internal/pwdbox"
 )
 
@@ -26,6 +26,10 @@ import (
 var assets embed.FS
 
 func main() {
+	pwdbox.TestAES()
+}
+
+func main1() {
 	// Create an instance of the app structure
 	app := NewApp()
 	fileOp := env.FileOp{}
