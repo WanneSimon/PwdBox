@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="float-block-white">
     <el-page-header @back="close">
       <template #content>
         <span class="text-large font-600 mr-3"> {{ title }} </span>
@@ -145,4 +145,5 @@ defineExpose({
 .form-wrapper{
   margin-top: 1rem;
 }
+
 </style>

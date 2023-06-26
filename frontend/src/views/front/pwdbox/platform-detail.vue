@@ -1,4 +1,5 @@
 <template>
+  <div>
   <el-dialog v-model="visible" 
     :fullscreen="false"
     :close-on-click-modal="false" center align-center
@@ -7,18 +8,18 @@
 
     <el-scrollbar height="100%"  v-loading="loadingPlatform"
         class="plat-wrapper" v-if="!isShowAccount">
-        <div class="" v-if="platformData.site"> 
+        <div class="float-block-white" v-if="platformData.site"> 
           <div class="site ellipse-text-line">{{ platformData.site }}</div> 
           <div class="site-op">
             <el-icon title="打开链接" class="op-icon click-item" @click="openLink(platformData.site)"><EarthFilled/></el-icon>
             <el-icon title="复制链接" class="op-icon click-item" @click="copyText(platformData.site)"><CopyLink/></el-icon>
             <el-icon title="添加账户" class="op-icon click-item" @click="showAccount(false, null)"><AddAlt /></el-icon>
           </div>
+          <div class="remark"> {{ platformData.remark }} </div>
         </div>
-        <div class="remark"> {{ platformData.remark }} </div>
         <el-divider></el-divider>
 
-        <div class="accounts"  v-loading="loadingAccounts">
+        <div class="accounts float-block-white"  v-loading="loadingAccounts">
 
           <!-- <el-card  >   -->
             <el-row v-for="item,index in accountList" :key="'paccount=' + index" class="card-item">
@@ -69,6 +70,7 @@
     <AccountForm ref="accountFormRef" v-else
        @saved="addAccount" @updated="updateAccount" @close="closeAccount"></AccountForm>
   </el-dialog>
+  </div>
 </template>
 
 <script setup>
@@ -201,6 +203,16 @@ defineExpose({
 </script>
 
 <style scoped lang="scss">
+//$--el-dialog-bg-color: #f3f3f3d1; 
+:deep(.el-dialog){
+  background:  #f3f3f3d1 ;
+}
+//.dialog-style{
+//  font-size: 1rem;
+//  color: red;
+//  background: #f3f3f3d1;
+//}
+
 .plat-wrapper{
   font-size: 1rem;
 }
@@ -249,6 +261,7 @@ defineExpose({
 
 .name{
   color: #005a14;
+  //color: red !important;
 }
 .password{
   color: #098383;
@@ -270,6 +283,5 @@ defineExpose({
     color: #28853d;
   }
 }
-
 
 </style>
