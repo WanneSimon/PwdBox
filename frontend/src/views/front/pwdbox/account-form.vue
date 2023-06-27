@@ -8,47 +8,53 @@
     
     
     <div>
-    <el-scrollbar height="22rem"
-        class="form-wrapper">
-      <el-form
-          ref="accountFormRef"
-          :model="dataForm"
-          :rules="rules"
-          label-width="5rem"
-          v-loading="saving"
-      >
-          <el-form-item label="用户名" prop="username">
-            <el-input v-model="dataForm.username" />
-          </el-form-item>
-          <el-form-item label="密码" prop="password">
-            <el-input v-model="dataForm.password" type="password" />
-          </el-form-item>
-          <el-form-item label="电话" prop="phone">
-            <el-input v-model="dataForm.phone" />
-          </el-form-item>
-          <el-form-item label="邮箱" prop="email">
-            <el-input v-model="dataForm.email" />
-          </el-form-item>
-          <el-form-item label="说明" prop="remark">
-            <el-input v-model="dataForm.remark" type="textarea" :rows="4"/>
-          </el-form-item>
-          <el-form-item label="创建时间" prop="create_time" v-if="dataForm.create_time">
-            {{ dataForm.create_time }}
-          </el-form-item>
-      </el-form>
-    </el-scrollbar>
-    <div class="form-buttons">
-      <el-button type="primary" v-if="!isUpdate" @click="save" :disabled="saving" >保存</el-button>
-      <el-button type="primary" v-else  @click="update" :disabled="saving" >更新</el-button>
-      <el-button type="" @click="close" :disabled="saving">取消</el-button>
+      <el-scrollbar height="22rem"
+          class="form-wrapper">
+        <el-form
+            ref="accountFormRef"
+            :model="dataForm"
+            :rules="rules"
+            label-width="5rem"
+            v-loading="saving"
+        >
+            <el-form-item label="用户名" prop="username">
+              <el-input v-model="dataForm.username" />
+            </el-form-item>
+            <!-- <el-form-item label="密码" prop="password">
+              <el-input v-model="dataForm.password" type="password" />
+            </el-form-item> -->
+            <el-form-item label="密码" prop="password">
+              <el-button type="warning" @click="showModifyPassword(dataForm)">密码</el-button>
+            </el-form-item>
+            <el-form-item label="电话" prop="phone">
+              <el-input v-model="dataForm.phone" />
+            </el-form-item>
+            <el-form-item label="邮箱" prop="email">
+              <el-input v-model="dataForm.email" />
+            </el-form-item>
+            <el-form-item label="说明" prop="remark">
+              <el-input v-model="dataForm.remark" type="textarea" :rows="4"/>
+            </el-form-item>
+            <el-form-item label="创建时间" prop="create_time" v-if="dataForm.create_time">
+              {{ dataForm.create_time }}
+            </el-form-item>
+        </el-form>
+      </el-scrollbar>
+      <div class="form-buttons">
+        <el-button type="primary" v-if="!isUpdate" @click="save" :disabled="saving" >保存</el-button>
+        <el-button type="primary" v-else  @click="update" :disabled="saving" >更新</el-button>
+        <el-button type="" @click="close" :disabled="saving">取消</el-button>
+      </div>
     </div>
-  </div>
+  
+    <ModifyPassword ref="modifyPasswordRef"></ModifyPassword>
   </div>
 </template>
 
 <script setup>
 import { AccountService } from "@/../wailsjs/index"
-import { reactive, ref, computed } from 'vue';
+import { reactive, ref, computed, inject } from 'vue'
+import ModifyPassword from "./modify-password.vue"
 
 const title = computed(() => {
   return isUpdate.value ? '编辑' : '添加'
@@ -57,6 +63,7 @@ const title = computed(() => {
 const emit = defineEmits(["close", "saved", "updated"])
 const saving = ref(false)
 const accountFormRef = ref(null)
+const modifyPasswordRef =ref(null)
 
 const emptyAccountForm = () => {
   return {
@@ -78,6 +85,8 @@ const rules = reactive({
   password: [{ required: true, message: '密码', trigger: 'blur' }]
 })
 
+const Message = inject("Message")
+
 const save = () => {
   // let rcomf = this.$refs
   accountFormRef.value.validate(valid => {
@@ -90,7 +99,12 @@ const save = () => {
     AccountService.Save(dataForm.value).then(res => {
       saving.value = false
       console.log("saved", res)
-      emit("saved", res) // 返回新建数据
+
+      if(res) {
+        emit("saved", res) // 返回新建数据
+      } else {
+        Message.error("保存失败")
+      }
     }, err => {
       saving.value = false
       console.error(err)
@@ -133,6 +147,10 @@ const show = (isUpdateArg, dataArg) => {
 
 const close = () => {
   emit("close")
+}
+
+const showModifyPassword = (account) => {
+  modifyPasswordRef.value.show(account)
 }
 
 defineExpose({

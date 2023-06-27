@@ -41,16 +41,25 @@ func (as *AccountService) Init(sqlEngine GoMybatis.GoMybatisEngine) {
 	sqlEngine.WriteMapperPtr(&accountMapper, accountMapperXml)
 }
 
-func (as *AccountService) Save(entity Account) Account {
+func (as *AccountService) Save(entity Account) *Account {
 	if entity.Username == "" {
 		panic("require username")
 	}
 	entity.Id = GenID()
 	entity.CreateTime = time.Now().Format("2006-01-02 15:04:05")
 	// TODO 密码加密
+	if entity.Password != "" {
+		data, err := EncryptToString(entity.Password, aesHolder.Key, aesHolder.IV)
+		if err != nil {
+			log.Println("加密失败")
+			log.Println(err)
+			return nil
+		}
+		entity.Password = data
+	}
 
 	accountMapper.Save(entity)
-	return entity
+	return &entity
 }
 
 func (as *AccountService) Update(entity Account) Account {
@@ -104,4 +113,24 @@ func (as *AccountService) PageList(platformId int64, username string, phone stri
 		list = []Account{}
 	}
 	return NewPageData[Account](page, size, total, list)
+}
+
+func (as *AccountService) UpdatePwd(id int64, newPassword string) bool {
+	po, err := accountMapper.Get(id)
+	if err != nil {
+		log.Printf("不存在账户: %d\n", id)
+		log.Println(err)
+		return false
+	}
+
+	data, err := EncryptToString(newPassword, aesHolder.Key, aesHolder.IV)
+	if err != nil {
+		log.Println("加密失败")
+		log.Println(err)
+		return false
+	}
+
+	po.Password = data
+	accountMapper.Update(po)
+	return true
 }

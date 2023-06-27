@@ -16,10 +16,10 @@
                   <div class="remark ellipse-text">{{item.remark}}</div>
 
                   <div class="opts">
-                    <el-button type="warning" plain round size="small" @click="showPlatformForm(true, item)">
+                    <el-button type="warning" plain round size="small" @click.stop="showPlatformForm(true, item)">
                       <el-icon><Edit32Filled/></el-icon>
                     </el-button>
-                    <el-button type="danger" plain round size="small" @click="showPlatformForm(true, item)">
+                    <el-button type="danger" plain round size="small" @click.stop="showPlatformForm(true, item)">
                       <el-icon><Delete28Filled/></el-icon>
                     </el-button>
                   </div>
@@ -34,14 +34,21 @@
         </div>
     
     <div class="float-buttons">
-      <el-button type="primary" size="" round @click="refresh()">
+      <el-button type="primary" size="" round @click="refresh()"
+        title="刷新平台">
         <el-icon><ArrowCounterclockwise28Filled /></el-icon>
       </el-button>
-      <el-button type="primary" size="" round @click="showPlatformForm(false, null)">
+      <el-button type="primary" size="" round @click="showPlatformForm(false, null)"
+        title="添加">
         <el-icon><AddCircle32Regular /></el-icon>
+      </el-button>
+      <el-button type="warning" size="" round @click="clearAesInfo()"
+        title="重载">
+        <el-icon><SubtractCircleArrowForward20Regular /></el-icon>
       </el-button>
     </div>
 
+    <InitCheck ref="initCheckRef" @verified="initData"></InitCheck>
     <PlatformForm ref="platformFormComponent" @saved="addPlatform" @updated="updatePlatform"></PlatformForm>
     <PlatformDetail ref="platformDetailComponent"></PlatformDetail>
   </div>

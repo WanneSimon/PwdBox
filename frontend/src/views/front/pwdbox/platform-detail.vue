@@ -31,29 +31,29 @@
               </div>
 
               <el-col :xs="24" :sm="5" :md="5" :lg="5" :xl="5" 
-                class="inline-icon click-item name"  @click="copyText(item.username)">
+                class="inline-icon click-item name" >
                 <!-- 用户名 -->
                 <el-icon><UserAvatar /></el-icon>
-                <span>{{maskName(item.username)}}</span>
+                <span @click="copyText(item.username)">{{maskName(item.username)}}</span>
               </el-col>
               <el-col :xs="24" :sm="3" :md="3" :lg="3" :xl="3" 
-                class="inline-icon click-item password"  @click="copyText(item.password)">
+                class="inline-icon click-item password" >
                 <!-- 密码 -->
                 <el-icon><Password /></el-icon>
-                <span>***</span>
+                <span @click="copyPassword(item.password)">***</span>
                 <!-- <span>{{item.password}}</span> -->
               </el-col>
               <el-col :xs="24" :sm="6" :md="6" :lg="6" :xl="6" 
-                class="inline-icon click-item phone"  @click="copyText(item.phone)">
+                class="inline-icon click-item phone" >
                 <!-- 电话 -->
-                <el-icon><Phone /></el-icon>
-                <span>{{maskPhone(item.phone)}}</span>
+                <el-icon v-if="item.phone"><Phone /></el-icon>
+                <span @click="copyText(item.phone)">{{maskPhone(item.phone)}}</span>
               </el-col>
               <el-col :xs="24" :sm="8" :md="8" :lg="6" :xl="6" 
-                class="inline-icon click-item email"  @click="copyText(item.email)">
+                class="inline-icon click-item email" >
                 <!-- 邮箱 -->
-                <el-icon><Email /></el-icon>
-                <span>{{maskEmail(item.email)}}</span>
+                <el-icon v-if="item.email"><Email /></el-icon>
+                <span @click="copyText(item.email)">{{maskEmail(item.email)}}</span>
               </el-col>
               <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" 
                 class="inline-icon remark" v-if="item.remark">
@@ -74,7 +74,7 @@
 </template>
 
 <script setup>
-import { OpenUrl, PlatformService, AccountService } from "@/../wailsjs/index"
+import { OpenUrl, PlatformService, AccountService, PwdTool } from "@/../wailsjs/index"
 import { ref, reactive, inject, nextTick } from "vue"
 import { DocumentEdit20Regular  } from '@vicons/fluent'
 import { UserAvatar, Password, Phone, Email, CopyLink, CloseOutline, EarthFilled, AddAlt  } from '@vicons/carbon'
@@ -107,7 +107,7 @@ const loadPlatform = async () => {
   platformData.value = res
   loadingPlatform.value = false
 
-  console.log("loadPlatform", platformData.value)
+  // console.log("loadPlatform", platformData.value)
 }
 const loadAccounts = async () => {
   if(!platformId.value) {
@@ -119,7 +119,7 @@ const loadAccounts = async () => {
   accountList.value = allAccounts
   loadingAccounts.value = false
 
-  console.log("allAccounts", allAccounts)
+  // console.log("allAccounts", allAccounts)
 } 
 const deleteAccount = async (item) => {
   ElMessageBox.confirm('账户删除后无法找回！', '确认删除此账户 '+item.username + '?', {
@@ -145,7 +145,7 @@ const show = async (idArg) => {
 
   // platformData.value = {}
   // accountList.value = []
-  console.log("platformId.value", platformId.value)
+  // console.log("platformId.value", platformId.value)
 
   await loadPlatform()
   await loadAccounts()
@@ -163,6 +163,15 @@ const copyText = async (str) => {
   await navigator.clipboard.writeText(str).then(data => data);
   // notice
   Noti.success({ message: "复制成功", position: 'bottom-right', duration: 2000})
+}
+// 复制密码
+const copyPassword = async (str) => {
+  let decrptyStr = await PwdTool.DecryptPwd(str).then(res => res)
+  // console.log("copyPassword", str, decrptyStr)
+  let cpResult = await navigator.clipboard.writeText(decrptyStr).then(data => data)
+  // console.log("cpResult", cpResult)
+  // notice
+  Noti.success({ message: "密码复制成功", position: 'bottom-right', duration: 2000})
 }
 
 

@@ -1,15 +1,16 @@
 // import { Greet, FileOp, ConfigOp, DbOp, PlatformService } from "@/../wailsjs/index"
 import { PlatformService } from "@/../wailsjs/index"
 import { AddCircle32Regular, Edit32Filled, Delete28Filled,
-  ArrowCounterclockwise28Filled } from '@vicons/fluent'
+  ArrowCounterclockwise28Filled, SubtractCircleArrowForward20Regular } from '@vicons/fluent'
 import PlatformForm from './platform-form.vue'
 import PlatformDetail from './platform-detail.vue'
+import InitCheck from './init-check.vue'
 
 export default {
   name: 'Pwdbox',
   components: { 
-    AddCircle32Regular, Edit32Filled, Delete28Filled, ArrowCounterclockwise28Filled,
-    PlatformForm, PlatformDetail, 
+    AddCircle32Regular, Edit32Filled, Delete28Filled, ArrowCounterclockwise28Filled, SubtractCircleArrowForward20Regular,
+    PlatformForm, PlatformDetail, InitCheck,
   },
   setup() {
     const testData = () => {
@@ -20,6 +21,8 @@ export default {
   },
   data() {
     return {
+      showDatas: false,
+
       loading: false,
       list: [],
       params: {
@@ -43,7 +46,7 @@ export default {
   },
   async mounted() { 
     // this.getPageData(1)
-    await this.startLoad()
+    // await this.startLoad()
   },
   // why OptionalAPI ? CompositionAPI makes some messy!
   methods: {
@@ -126,6 +129,7 @@ export default {
       this.paramsPage.page = 0
       this.list = []
       this.hasMoreData = true
+      this.showDatas = true
 
       let count = 1
       // console.log("startLoad")
@@ -163,8 +167,20 @@ export default {
       return isShowInView
     },
     
+    async initData() {
+      await this.startLoad()
+    },
 
-
+    async clearAesInfo() {
+      await sessionStorage.removeItem("pwdbox")
+      this.paramsPage.page = 0
+      this.paramsPage.total = 0
+      this.list = []
+      this.showDatas = false
+      
+      let icRef = this.$refs.initCheckRef
+      icRef.showAndCheck()
+    }
   }
 
 }

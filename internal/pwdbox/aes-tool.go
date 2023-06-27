@@ -23,10 +23,11 @@ func NewAesInfo(key string, iv string) AesInfo {
 
 func TestAES() {
 
-	key := []byte("bGcGfWb3Kg2s4gcG")
-	iv := []byte("aebksHkG4jAEk2Ag")
+	key := []byte("1234567890abcdef")
+	iv := []byte("1234567890abcdef")
 
-	rawText := "hello world"
+	// rawText := "hello world"
+	rawText := "this-is-check-data"
 
 	plaintext := []byte(rawText)
 	// 加密

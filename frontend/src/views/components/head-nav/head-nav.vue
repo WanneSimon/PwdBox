@@ -1,7 +1,7 @@
 <template>
   <div class="nav-head float-block fixed-nav-head" style="--wails-draggable: drag">
       <label class="icon-label">
-        <router-link :to="'/home'" title="Home" target="self">
+        <router-link :to="'/home'" title="home home ~ sweet home!" target="self">
           <el-button size="small" color="#626aef">Home</el-button>
         </router-link>
       </label>
@@ -12,15 +12,14 @@
         </router-link>
       </label>
       -->
-      <!--       -->
-      <label class="icon-label" title="保险箱">
+      <label class="icon-label" title="password box - 保险箱">
         <router-link :to="'/pwdbox'">
-          <el-button size="small" color="#626aef"> 保险箱</el-button>
+          <el-button size="small" color="#626aef">pwdbox</el-button>
         </router-link>
       </label>
-      <label class="icon-label" title="小工具">
+      <label class="icon-label" title="tools - 小工具">
         <router-link :to="'/tools'">
-          <el-button size="small" color="#626aef"> 小工具</el-button>
+          <el-button size="small" color="#626aef">tools</el-button>
         </router-link>
       </label>
 
@@ -29,11 +28,11 @@
         <!-- <el-button size="small" type="warning" @click="min" :icon="'Minus'">最小化</el-button>
         <el-button size="small" type="warning" @click="exit" :icon="'Close'">退出</el-button>
         <el-button size="small" @click="goBack" :icon="'ArrowLeftBold'">返回</el-button> -->
-        <el-button size="small" @click="goBack" title="返回">
+        <el-button size="small" @click="goBack" title="back - 返回">
             <el-icon><ArrowLeftBold /></el-icon></el-button>
-        <el-button size="small" type="warning" @click="min" title="最小化">
+        <el-button size="small" type="warning" @click="min" title="min - 最小化">
           <el-icon><Minus /></el-icon></el-button>
-        <el-button size="small" type="danger" @click="exit" title="关闭">
+        <el-button size="small" type="danger" @click="exit" title="exit - 关闭">
           <el-icon><Close /></el-icon></el-button>
       </label>
   </div>
@@ -72,7 +71,8 @@ const min= () => {
   padding-right: 10rem;
 
   text-align: center;
-  background-color: rgba($color: #000000, $alpha: 0.3);
+  //background-color: rgba($color: #d6c2a8, $alpha: 0.75);
+  background-color: #f3f3f3bf;
   a {
     color: #606266 !important;
   }
@@ -82,7 +82,7 @@ const min= () => {
 
   .right-pos{
     position: absolute;
-    right: 1px;
+    right: 0.4rem;
     top: 0;
     width: rem;
   }
@@ -90,7 +90,7 @@ const min= () => {
 
 .fixed-nav-head{
   position: fixed;
-  z-index: 2023;  // 比 ElModal 高一点点
+  z-index: 2003;  
 }
 :deep(.el-button+.el-button) {
   margin-left: 1px;

@@ -51,6 +51,7 @@ func (a *App) Minimises() {
 // 让窗口完全透明化
 func (a *App) transparentWinOS(title string) {
 	hwnd := win.FindWindow(nil, syscall.StringToUTF16Ptr(title))
+	// hwnd := win.FindWindow(nil, syscall.UTF16PtrFromString(title))
 	win.SetWindowLong(hwnd, win.GWL_EXSTYLE, win.GetWindowLong(hwnd, win.GWL_EXSTYLE)|win.WS_EX_LAYERED)
 }
 

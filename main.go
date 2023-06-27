@@ -25,11 +25,11 @@ import (
 //go:embed all:frontend/dist
 var assets embed.FS
 
-func main() {
-	pwdbox.TestAES()
-}
+// func main() {
+// 	pwdbox.TestAES()
+// }
 
-func main1() {
+func main() {
 	// Create an instance of the app structure
 	app := NewApp()
 	fileOp := env.FileOp{}
@@ -45,6 +45,8 @@ func main1() {
 	configOps := conf.NewConfigOpsAndLoad(appConfigPath)
 
 	appConfig := configOps.Get()
+
+	pwdTool := pwdbox.PwdTool{}
 
 	// fmt.Println("appconfig", appConfig)
 
@@ -72,6 +74,7 @@ func main1() {
 		Bind: []interface{}{
 			app, configOps, &fileOp, &dbop,
 			&(pwdbox.PlatformServiceInstance), &pwdbox.AccountServiceInstance,
+			&pwdTool,
 		},
 		Windows: &windows.Options{
 			WebviewIsTransparent: true,
