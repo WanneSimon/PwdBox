@@ -25,7 +25,7 @@ var Config AppConfig
 // app 的全局配置文件
 var ConfigPath string = ""
 
-// //go:embed saya-sample.yml
+// //go:embed pwdbox-sample.yml
 // var sayaConfigString string
 
 // 设置全局配置对象
@@ -35,7 +35,7 @@ func SetConfig(ac AppConfig) {
 
 func DefaultAppConfig() AppConfig {
 	return AppConfig{
-		Title:     "saya-app",
+		Title:     "PwdBox",
 		Debug:     false,
 		Frameless: true,
 		Pwdbox:    "config/pwdbox.db3",

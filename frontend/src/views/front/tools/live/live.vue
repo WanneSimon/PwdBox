@@ -45,6 +45,12 @@ export default {
         }
         this.initPlayer(u);
     },
+    unmounted() {
+        console.log("unmounted")
+        if(this.flvPlayer) {
+            this.flvPlayer.destroy()
+        }
+    },
     methods: {
         initPlayer(url) {
             if (flvjs.isSupported()) {

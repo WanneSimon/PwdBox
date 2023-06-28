@@ -33,7 +33,7 @@
         "-gcflags",
         "all=-N -l",
         "-o",
-        "build/bin/saya-app.exe"
+        "build/bin/pwdbox.exe"
       ]
     },
     {
@@ -68,7 +68,7 @@
         "-gcflags",
         "all=-N -l",
         "-o",
-        "build/bin/saya-app.exe"
+        "build/bin/pwdbox.exe"
       ]
     },
     {
@@ -103,7 +103,7 @@
       //   "-gcflags",
       //   "all=-N -l",
       //   "-o",
-      //   "build/bin/saya-app.exe"
+      //   "build/bin/pwdbox.exe"
       // ]
       "command": "wails",
       "args": [ "dev" ]

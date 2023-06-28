@@ -20,12 +20,12 @@
             <el-form-item label="用户名" prop="username">
               <el-input v-model="dataForm.username" />
             </el-form-item>
-            <!-- <el-form-item label="密码" prop="password">
-              <el-input v-model="dataForm.password" type="password" />
-            </el-form-item> -->
-            <el-form-item label="密码" prop="password">
-              <el-button type="warning" @click="showModifyPassword(dataForm)">密码</el-button>
+            <el-form-item label="密码" prop="password" v-if="!isUpdate">
+              <el-input v-model="dataForm.password" type="password" show-password />
             </el-form-item>
+            <!-- <el-form-item label="密码" prop="password" v-else >
+              <el-button type="warning" @click="showModifyPassword(dataForm)">密码</el-button>
+            </el-form-item> -->
             <el-form-item label="电话" prop="phone">
               <el-input v-model="dataForm.phone" />
             </el-form-item>
@@ -47,14 +47,14 @@
       </div>
     </div>
   
-    <ModifyPassword ref="modifyPasswordRef"></ModifyPassword>
+    <!-- <ModifyPassword ref="modifyPasswordRef"></ModifyPassword> -->
   </div>
 </template>
 
 <script setup>
 import { AccountService } from "@/../wailsjs/index"
 import { reactive, ref, computed, inject } from 'vue'
-import ModifyPassword from "./modify-password.vue"
+// import ModifyPassword from "./modify-password.vue"
 
 const title = computed(() => {
   return isUpdate.value ? '编辑' : '添加'
@@ -63,7 +63,7 @@ const title = computed(() => {
 const emit = defineEmits(["close", "saved", "updated"])
 const saving = ref(false)
 const accountFormRef = ref(null)
-const modifyPasswordRef =ref(null)
+// const modifyPasswordRef =ref(null)
 
 const emptyAccountForm = () => {
   return {
@@ -90,7 +90,7 @@ const Message = inject("Message")
 const save = () => {
   // let rcomf = this.$refs
   accountFormRef.value.validate(valid => {
-    console.log("dataForm", dataForm.value)
+    // console.log("dataForm", dataForm.value)
     if(!valid) {
       return
     }
@@ -149,9 +149,9 @@ const close = () => {
   emit("close")
 }
 
-const showModifyPassword = (account) => {
-  modifyPasswordRef.value.show(account)
-}
+// const showModifyPassword = (account) => {
+//   modifyPasswordRef.value.show(account)
+// }
 
 defineExpose({
   show,

@@ -20,13 +20,13 @@
               v-loading="saving || checking"
             >
               <el-form-item label="Key" prop="key">
-                <el-input v-model="dataForm.key" placeholder="16位key" />
+                <el-input v-model="dataForm.key" placeholder="16位key" type="password" show-password />
               </el-form-item>
               <el-form-item label="IV" prop="iv">
-                <el-input v-model="dataForm.iv"  placeholder="16位iv"/>
+                <el-input v-model="dataForm.iv"  placeholder="16位iv" type="password" show-password />
               </el-form-item>
             </el-form>
-            <div class="form-buttons">
+            <div class="form-buttons" style="border-top:none">
               <el-button type="primary" v-if="!hasData" @click="save" :disabled="saving" >保存</el-button>
               <el-button type="primary" v-else  @click="verify" :disabled="checking" >确认</el-button>
             </div>
@@ -159,6 +159,8 @@ const loadTempData = () => {
 
 const verifySuccess = () => {
   visible.value = false
+  dataForm.value.key = null
+  dataForm.value.iv = null
   emit("verified")
 }
 

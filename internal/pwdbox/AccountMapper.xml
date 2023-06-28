@@ -34,7 +34,7 @@
 
     <insert id="Save">
         insert into account (id, platform_id, username, password, phone, email, remark, create_time)
-        values (#{id}, #{platform_id}, #{username}, #{password}, #{phone}, #{email}, #{remark}, #{platform_id})
+        values (#{id}, #{platform_id}, #{username}, #{password}, #{phone}, #{email}, #{remark}, #{create_time})
     </insert>
 
     <delete id="Delete">

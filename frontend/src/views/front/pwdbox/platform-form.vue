@@ -70,7 +70,7 @@ const emit = defineEmits([ "saved", "updated" ])
 const save = () => {
   // let rcomf = this.$refs
   platformFormRef.value.validate(valid => {
-    console.log("dataForm", dataForm.value)
+    // console.log("dataForm", dataForm.value)
     if(!valid) {
       return
     }
@@ -78,7 +78,7 @@ const save = () => {
     saving.value = true
     PlatformService.Save(dataForm.value).then(res => {
       saving.value = false
-      console.log("saved", res)
+      // console.log("saved", res)
       emit("saved", res) // 返回新建数据
     }, err => {
       saving.value = false

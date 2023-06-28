@@ -25,9 +25,11 @@ import (
 //go:embed all:frontend/dist
 var assets embed.FS
 
-// func main() {
-// 	pwdbox.TestAES()
-// }
+//	func main() {
+//		pwdbox.TestAES()
+//	}
+var sp = fmt.Sprintf("%c", filepath.Separator)
+var ConfigFolder string = "config" + sp
 
 func main() {
 	// Create an instance of the app structure
@@ -40,8 +42,8 @@ func main() {
 	var rootPath string = GetCurrentAbPath()
 	// var rootPath string = "D:\\Git_Repo\\saya"
 	// appConfig := strings.Join(rootPath, filepath.Separator, "config", filepath.Separator, "saya.yml")
-	sp := fmt.Sprintf("%c", filepath.Separator)
-	var appConfigPath = rootPath + sp + "config" + sp + "saya.yml"
+	// sp := fmt.Sprintf("%c", filepath.Separator)
+	var appConfigPath = rootPath + sp + ConfigFolder + sp + "saya.yml"
 	configOps := conf.NewConfigOpsAndLoad(appConfigPath)
 
 	appConfig := configOps.Get()
@@ -52,9 +54,11 @@ func main() {
 
 	// Create application with options
 	err := wails.Run(&options.App{
-		Title:     appConfig.Title, //"saya-app",
-		Width:     1024,
-		Height:    768,
+		Title: appConfig.Title, //"pwdbox",
+		// Width:     1024,
+		// Height:    768,
+		Width:     930,
+		Height:    660,
 		MinWidth:  930,
 		MinHeight: 660,
 		Frameless: appConfig.Frameless,

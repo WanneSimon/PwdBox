@@ -46,7 +46,10 @@ func (pt *PwdTool) SaveAesInfo(key string, iv string) bool {
 		return false
 	}
 
-	data, err := EncryptToString(verifyData, []byte(key), []byte(iv))
+	// #key 一起存储的方案 （key 和 verifyData 一起存）
+	// fileContent := key + "\n\r" + verifyData
+	fileContent := verifyData
+	data, err := EncryptToString(fileContent, []byte(key), []byte(iv))
 	if err != nil {
 		log.Println("验证数据加密失败")
 		log.Println(err)
@@ -82,25 +85,40 @@ func (pt *PwdTool) VerifyAndKeepAesInfo(key string, iv string) (bool, error) {
 	if err != nil {
 		log.Println("未找到验证文件2")
 		log.Println(err)
-		return false, err
+		return false, errors.New("未找到验证文件")
 	}
 
 	data, err2 := ioutil.ReadAll(file)
 	if err2 != nil {
 		log.Println("验证文件读取失败2")
 		log.Println(err2)
+		return false, errors.New("验证文件读取失败")
 	}
 
-	str := string(data)
-	log.Println("===data===\n", str)
-	rawStr, err3 := DecryptToString(str, []byte(key), []byte(iv))
-	log.Println("===data===\n", rawStr, verifyData)
-	if err3 == nil && rawStr == verifyData {
+	fileContent := string(data)
+	// arr := strings.Split(fileContent, "\n\r")
+	// #key 一起存储的方案
+	// if !strings.HasPrefix(fileContent, key) {
+	// 	log.Println("验证文件读取失败2")
+	// 	log.Println(err2)
+	// 	return false, errors.New("key错误")
+	// }
+	// log.Println("===data===\n", str)
+	// 解密后比较原数据是否相等（key错误时解密会报错）
+	// rawStr, err3 := DecryptToString(fileContent, []byte(key), []byte(iv))
+	// log.Println("===data===\n", rawStr, verifyData)
+	// if err3 == nil && rawStr == inputContent { // 比较解密字符串
+
+	// 加密后比较是否相等
+	// inputContent := key + "\n\r" + verifyData
+	inputContent := verifyData
+	encStr, err3 := EncryptToString(inputContent, []byte(key), []byte(iv))
+	if err3 == nil && encStr == fileContent { // 比较加密字符串
 		aesHolder.Key = []byte(key)
 		aesHolder.IV = []byte(iv)
 		return true, nil
 	} else if err3 != nil {
-		log.Println("验证数据解密失败")
+		log.Println("验证数据失败")
 		log.Println(err3)
 	}
 	return false, errors.New("验证失败")

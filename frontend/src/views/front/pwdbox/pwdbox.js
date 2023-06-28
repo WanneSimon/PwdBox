@@ -100,7 +100,7 @@ export default {
       rcom.show(data.id)
     },
     addPlatform(data) {
-      this.list.value.unshift(data)
+      this.list.unshift(data)
       this.$refs.platformFormComponent.close()
     },
     updatePlatform(data) {
@@ -131,14 +131,19 @@ export default {
       this.hasMoreData = true
       this.showDatas = true
 
+      // list清空后未及时渲染，所以需要放到 nextTick 中，同时又需要顺序加载，所以单独写成方法
+      this.$nextTick(() => {
+        this.innerStartLoad()
+      })
+    },
+    async innerStartLoad() {
       let count = 1
-      // console.log("startLoad")
+      //console.log("startLoad")
       while(this.hasMoreData && this.loadMoreIsInViewPort()) {
         await this.lazyLoadMore()
         // console.log("startLoad-count", count)
         count++
       }
-
     },
 
     // 返回是否
@@ -164,6 +169,7 @@ export default {
       // console.log("top", screenHeight, top, el.clientHeight, top+el.clientHeight)
       
       let isShowInView = top <= screenHeight;
+      // console.log("isShowInView", isShowInView)
       return isShowInView
     },
     

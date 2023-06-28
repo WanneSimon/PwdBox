@@ -11,7 +11,7 @@
                   
                   <div class="name"> 
                     <span class="name-text ellipse-text-line">{{item.name}}</span>
-                    <span class="index">{{index}}</span>
+                    <span class="index">{{index+1}}</span>
                   </div>
                   <div class="remark ellipse-text">{{item.remark}}</div>
 
@@ -33,7 +33,7 @@
           </template>
         </div>
     
-    <div class="float-buttons">
+    <div class="float-buttons" v-if="showDatas">
       <el-button type="primary" size="" round @click="refresh()"
         title="刷新平台">
         <el-icon><ArrowCounterclockwise28Filled /></el-icon>
@@ -42,7 +42,7 @@
         title="添加">
         <el-icon><AddCircle32Regular /></el-icon>
       </el-button>
-      <el-button type="warning" size="" round @click="clearAesInfo()"
+      <el-button type="danger" size="" round @click="clearAesInfo()"
         title="重载">
         <el-icon><SubtractCircleArrowForward20Regular /></el-icon>
       </el-button>
@@ -57,10 +57,6 @@
 <script src="./pwdbox.js" ></script>
 
 <style scoped lang="scss">
-.wrapper{
-  //display: flex;
-  //flex-direction: row;
-}
 .float-buttons{
   position: fixed;
   bottom: 1rem;

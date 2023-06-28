@@ -18,5 +18,7 @@ router.beforeEach( async (to, from, next) => {
   // TODO 跳转到需要权限的页面，预先检查权限
   next()
 })
+router.afterEach(() => {
+})
 
 export default router

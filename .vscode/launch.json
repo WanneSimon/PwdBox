@@ -2,29 +2,29 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Wails: Production saya-app",
+      "name": "Wails: Production pwdbox",
       "type": "go",
       "request": "launch",
       "mode": "exec",
-      "program": "${workspaceFolder}/build/bin/saya-app.exe",
+      "program": "${workspaceFolder}/build/bin/pwdbox.exe",
       "preLaunchTask": "build",
       "cwd": "${workspaceFolder}"
     },
     {
-      "name": "Wails: Debug saya-app",
+      "name": "Wails: Debug pwdbox",
       "type": "go",
       "request": "launch",
       "mode": "exec",
-      "program": "${workspaceFolder}/build/bin/saya-app.exe",
+      "program": "${workspaceFolder}/build/bin/pwdbox.exe",
       "preLaunchTask": "build debug",
       "cwd": "${workspaceFolder}"
     },
     {
-      "name": "Wails: Dev saya-app",
+      "name": "Wails: Dev pwdbox",
       "type": "go",
       "request": "launch",
       "mode": "exec",
-      "program": "${workspaceFolder}/build/bin/saya-app.exe",
+      "program": "${workspaceFolder}/build/bin/pwdbox.exe",
       "preLaunchTask": "build dev",
       "cwd": "${workspaceFolder}"
     }

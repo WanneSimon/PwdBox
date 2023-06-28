@@ -10,16 +10,16 @@
               :model="dataForm"
               :rules="rules"
               label-width="5rem"
-              v-loading="saving || checking"
+              v-loading="saving"
             >
               <el-form-item label="新密码" prop="newPassword">
-                <el-input v-model="dataForm.newPassword" placeholder="您的新密码" />
+                <el-input type="password" v-model="dataForm.newPassword" placeholder="您的新密码" show-password />
               </el-form-item>
             </el-form>
 
-            <div class="form-buttons">
+            <div class="form-buttons" style="border-top:none">
               <el-button type="warning" @click="save" :disabled="saving" >保存</el-button>
-              <el-button type="defualt" @click="close" :disabled="saving" >取消</el-button>
+              <el-button type="" @click="close" :disabled="saving" >取消</el-button>
             </div>
 
     </el-dialog>
@@ -31,7 +31,7 @@ import { ref, inject, onMounted} from 'vue'
 import { AccountService } from '@/../wailsjs/index'
 import { ElMessageBox } from 'element-plus'
 
-const visible = ref(true) // 是否可见
+const visible = ref(false) // 是否可见
 const accountData = ref(null) // 是否有验证数据
 const saving = ref(false) // 表单保存
 
@@ -45,17 +45,18 @@ const rules = ref({
 
 const Noti = inject("Noti")
 const Message = inject("Message")
+const emit = defineEmits([ "saved" ])
 
 // 保存key和iv
 const save =  () => {
   modifyFormRef.value.validate(valid => {
-    // console.log("dataForm", dataForm.value)
+    // console.log("dataForm", accountData.value)
     if(!valid) {
       return
     }
 
     // save
-    ElMessageBox.confirm('修改密码！', '确认修改账户 '+accountData.username + ' 的密码吗?', {
+    ElMessageBox.confirm('修改密码！', '确认修改账户 '+accountData.value.username + ' 的密码吗?', {
         confirmButtonText: '修改',
         cancelButtonText: '再想想',
         type: 'warning',
@@ -66,6 +67,7 @@ const save =  () => {
         saving.value = false
         if(res) {
           Noti.success({ message: "修改成功", position: 'bottom-right', duration: 2000})
+          emit("saved")
           close()
         } else {
           Message.error("修改失败")
@@ -85,6 +87,7 @@ const save =  () => {
 const show = (data) => {
   visible.value = true
   accountData.value = data
+  dataForm.value.newPassword = null
 }
 const close = () => {
   visible.value = false
@@ -92,7 +95,7 @@ const close = () => {
 }
 
 onMounted(() => {
-  checkHasVerifyData()
+  // checkHasVerifyData()
 })
 
 defineExpose({
