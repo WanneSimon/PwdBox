@@ -1,7 +1,8 @@
 // import { Greet, FileOp, ConfigOp, DbOp, PlatformService } from "@/../wailsjs/index"
-import { PlatformService } from "@/../wailsjs/index"
+import { PlatformService, DataOutOp } from "@/../wailsjs/index"
 import { AddCircle32Regular, Edit32Filled, Delete28Filled,
-  ArrowCounterclockwise28Filled, SubtractCircleArrowForward20Regular } from '@vicons/fluent'
+  ArrowCounterclockwise28Filled, SubtractCircleArrowForward20Regular,
+  ArrowExportLtr20Regular } from '@vicons/fluent'
 import PlatformForm from './platform-form.vue'
 import PlatformDetail from './platform-detail.vue'
 import InitCheck from './init-check.vue'
@@ -9,7 +10,8 @@ import InitCheck from './init-check.vue'
 export default {
   name: 'Pwdbox',
   components: { 
-    AddCircle32Regular, Edit32Filled, Delete28Filled, ArrowCounterclockwise28Filled, SubtractCircleArrowForward20Regular,
+    AddCircle32Regular, Edit32Filled, Delete28Filled, ArrowCounterclockwise28Filled,
+    SubtractCircleArrowForward20Regular, ArrowExportLtr20Regular, 
     PlatformForm, PlatformDetail, InitCheck,
   },
   setup() {

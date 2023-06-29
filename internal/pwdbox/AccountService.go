@@ -49,7 +49,7 @@ func (as *AccountService) Save(entity Account) *Account {
 	entity.CreateTime = time.Now().Format("2006-01-02 15:04:05")
 	// TODO 密码加密
 	if entity.Password != "" {
-		data, err := EncryptToString(entity.Password, aesHolder.Key, aesHolder.IV)
+		data, err := EncryptToString(entity.Password, AesHolder.Key, AesHolder.IV)
 		if err != nil {
 			log.Println("加密失败")
 			log.Println(err)
@@ -123,7 +123,7 @@ func (as *AccountService) UpdatePwd(id int64, newPassword string) bool {
 		return false
 	}
 
-	data, err := EncryptToString(newPassword, aesHolder.Key, aesHolder.IV)
+	data, err := EncryptToString(newPassword, AesHolder.Key, AesHolder.IV)
 	if err != nil {
 		log.Println("加密失败")
 		log.Println(err)

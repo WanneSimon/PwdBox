@@ -8,8 +8,9 @@ import * as DbOp from './go/pwdbox/DbOp'
 import * as PlatformService from './go/pwdbox/PlatformService'
 import * as AccountService from './go/pwdbox/AccountService'
 import * as PwdTool from './go/pwdbox/PwdTool'
+import * as DataOutOp from './go/dataop/DataOutOp'
 
 export {
-  FileOp, ConfigOp, DbOp, PlatformService, AccountService, PwdTool, 
+  FileOp, ConfigOp, DbOp, PlatformService, AccountService, PwdTool, DataOutOp,
 }
 

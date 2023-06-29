@@ -1,3 +1,5 @@
+This file is generated automatically, [more information](https://wails.io/docs/reference/cli)
+
 # Build Directory
 
 The build directory is used to house all the build files and assets for your application. 

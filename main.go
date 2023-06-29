@@ -17,9 +17,10 @@ import (
 	"github.com/wailsapp/wails/v2/pkg/options/windows"
 
 	// "github.com/wailsapp/wails/v2/pkg/runtime"
-	"github.com/wanneSimon/saya-app/internal/conf"
-	"github.com/wanneSimon/saya-app/internal/env"
-	"github.com/wanneSimon/saya-app/internal/pwdbox"
+	"github.com/wanneSimon/pwdbox/internal/conf"
+	dataop "github.com/wanneSimon/pwdbox/internal/data-op"
+	"github.com/wanneSimon/pwdbox/internal/env"
+	"github.com/wanneSimon/pwdbox/internal/pwdbox"
 )
 
 //go:embed all:frontend/dist
@@ -34,9 +35,9 @@ var ConfigFolder string = "config" + sp
 func main() {
 	// Create an instance of the app structure
 	app := NewApp()
-	fileOp := env.FileOp{}
+	fileOp := env.FileOp{} // 文件操作
 
-	dbop := pwdbox.DbOp{}
+	dbop := pwdbox.DbOp{} // 数据库操作
 
 	// configs
 	var rootPath string = GetCurrentAbPath()
@@ -44,11 +45,12 @@ func main() {
 	// appConfig := strings.Join(rootPath, filepath.Separator, "config", filepath.Separator, "saya.yml")
 	// sp := fmt.Sprintf("%c", filepath.Separator)
 	var appConfigPath = rootPath + sp + ConfigFolder + sp + "saya.yml"
-	configOps := conf.NewConfigOpsAndLoad(appConfigPath)
+	configOps := conf.NewConfigOpsAndLoad(appConfigPath) // 配置操作
 
-	appConfig := configOps.Get()
+	appConfig := configOps.Get() // 配置
 
-	pwdTool := pwdbox.PwdTool{}
+	pwdTool := pwdbox.PwdTool{}     // 加密工具
+	dataOutOp := dataop.DataOutOp{} // 数据导出
 
 	// fmt.Println("appconfig", appConfig)
 
@@ -78,7 +80,7 @@ func main() {
 		Bind: []interface{}{
 			app, configOps, &fileOp, &dbop,
 			&(pwdbox.PlatformServiceInstance), &pwdbox.AccountServiceInstance,
-			&pwdTool,
+			&pwdTool, &dataOutOp,
 		},
 		Windows: &windows.Options{
 			WebviewIsTransparent: true,

@@ -9,7 +9,7 @@ import (
 )
 
 // 持有并验证用户输入的 key 和 iv 是否正确
-var aesHolder AesInfo
+var AesHolder AesInfo
 
 const verifyData string = "this-is-check-data"
 const verifyDataPath = "config/key-iv-for-check"
@@ -68,8 +68,8 @@ func (pt *PwdTool) SaveAesInfo(key string, iv string) bool {
 		return false
 	}
 
-	aesHolder.Key = []byte(key)
-	aesHolder.IV = []byte(iv)
+	AesHolder.Key = []byte(key)
+	AesHolder.IV = []byte(iv)
 	return true
 }
 
@@ -114,8 +114,8 @@ func (pt *PwdTool) VerifyAndKeepAesInfo(key string, iv string) (bool, error) {
 	inputContent := verifyData
 	encStr, err3 := EncryptToString(inputContent, []byte(key), []byte(iv))
 	if err3 == nil && encStr == fileContent { // 比较加密字符串
-		aesHolder.Key = []byte(key)
-		aesHolder.IV = []byte(iv)
+		AesHolder.Key = []byte(key)
+		AesHolder.IV = []byte(iv)
 		return true, nil
 	} else if err3 != nil {
 		log.Println("验证数据失败")
@@ -126,14 +126,30 @@ func (pt *PwdTool) VerifyAndKeepAesInfo(key string, iv string) (bool, error) {
 
 // 该方法只是为了让 js 中有 AesInfo 这个类型
 func (pt *PwdTool) GetAesInfo() AesInfo {
-	return aesHolder
+	return AesHolder
 }
 
 // 解密方法
 func (pt *PwdTool) DecryptPwd(encPwd string) string {
-	re, err := DecryptToString(encPwd, aesHolder.Key, aesHolder.IV)
+	re, err := DecryptToString(encPwd, AesHolder.Key, AesHolder.IV)
 	if err != nil {
 		return ""
 	}
 	return re
+}
+
+// 检查导出的文件是否已存在
+func (pt *PwdTool) ExportFileExist() bool {
+	file := "pwdbox-data.md"
+	_, err := os.Stat(file)
+
+	if err == nil {
+		return true
+	}
+
+	if os.IsNotExist(err) {
+		return false
+	}
+
+	return false
 }

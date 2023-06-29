@@ -1,4 +1,4 @@
-module github.com/wanneSimon/saya-app
+module github.com/wanneSimon/pwdbox
 
 go 1.18
 

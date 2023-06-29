@@ -43,8 +43,12 @@
         <el-icon><AddCircle32Regular /></el-icon>
       </el-button>
       <el-button type="danger" size="" round @click="clearAesInfo()"
-        title="重载">
+        title="退出">
         <el-icon><SubtractCircleArrowForward20Regular /></el-icon>
+      </el-button>
+      <el-button type="danger" size="" round @click="clearAesInfo()"
+        title="导出数据">
+        <el-icon><ArrowExportLtr20Regular /></el-icon>
       </el-button>
     </div>
 
