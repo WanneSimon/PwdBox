@@ -137,19 +137,3 @@ func (pt *PwdTool) DecryptPwd(encPwd string) string {
 	}
 	return re
 }
-
-// 检查导出的文件是否已存在
-func (pt *PwdTool) ExportFileExist() bool {
-	file := "pwdbox-data.md"
-	_, err := os.Stat(file)
-
-	if err == nil {
-		return true
-	}
-
-	if os.IsNotExist(err) {
-		return false
-	}
-
-	return false
-}

@@ -7,8 +7,13 @@
       :width="'60%'">
         <el-scrollbar height="100%">
 
-          <div v-if="!showForm">
-            checking...
+          <div v-if="!showForm" style="font-size: 2rem; text-align:center">
+          <!-- <div style="font-size: 2rem; text-align:center"> -->
+            <span > 
+              <!-- <sub> . </sub> . <sup> . </sup>
+              . <sub> . </sub> -->
+              ꕀ ꕀ  ᐝ   ᐝ
+            </span>
           </div>
           
           <div v-else>
@@ -158,10 +163,13 @@ const loadTempData = () => {
 } 
 
 const verifySuccess = () => {
-  visible.value = false
-  dataForm.value.key = null
-  dataForm.value.iv = null
-  emit("verified")
+  console.log("verifySuccess")
+  emit("verified") 
+  setTimeout(() => {
+    visible.value = false
+    dataForm.value.key = null
+    dataForm.value.iv = null
+  }, 500);
 }
 
 const showAndCheck = () => {

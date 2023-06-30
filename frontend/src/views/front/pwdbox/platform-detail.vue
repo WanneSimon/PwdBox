@@ -26,11 +26,12 @@
 
         <div class="accounts float-block-white"  v-loading="loadingAccounts">
           <div style="text-align:right">
-            <el-button type="primary" size="small" title="添加账户">
-              <el-icon class="" @click="showAccount(false, null)">
-                <Add12Filled />
+            <!-- <el-button type="primary" size="small" title="添加账户"> -->
+              <el-icon class="op-icon click-item" style="width:1.3rem;height:1.3rem;" @click.stop="showAccount(false, null)">
+                <!-- <Add12Filled /> -->
+                <AddSquare20Regular />
               </el-icon>
-            </el-button>
+            <!-- </el-button> -->
           </div>
 
 
@@ -96,7 +97,7 @@
 <script setup>
 import { OpenUrl, PlatformService, AccountService, PwdTool } from "@/../wailsjs/index"
 import { ref, reactive, inject, nextTick } from "vue"
-import { DocumentEdit20Regular, LockClosed20Regular, Add12Filled  } from '@vicons/fluent'
+import { DocumentEdit20Regular, LockClosed20Regular, AddSquare20Regular  } from '@vicons/fluent'
 import { UserAvatar, Password, Phone, Email, CopyLink, CloseOutline, EarthFilled  } from '@vicons/carbon'
 import { maskPhone, maskEmail, maskName } from '@/utils/tools'
 import AccountForm from "./account-form.vue"

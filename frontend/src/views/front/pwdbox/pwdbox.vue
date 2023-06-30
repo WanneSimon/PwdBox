@@ -34,26 +34,29 @@
         </div>
     
     <div class="float-buttons" v-if="showDatas">
-      <el-button type="primary" size="" round @click="refresh()"
-        title="刷新平台">
+      <el-button type="primary" size="small"  round @click="refresh()"
+        title="刷新">
         <el-icon><ArrowCounterclockwise28Filled /></el-icon>
       </el-button>
-      <el-button type="primary" size="" round @click="showPlatformForm(false, null)"
+      <el-button type="success" size="small"  round @click="showPlatformForm(false, null)"
         title="添加">
         <el-icon><AddCircle32Regular /></el-icon>
       </el-button>
-      <el-button type="danger" size="" round @click="clearAesInfo()"
+      <el-button type="warning" size="small"  round @click="clearAesInfo()"
         title="退出">
         <el-icon><SubtractCircleArrowForward20Regular /></el-icon>
       </el-button>
-      <el-button type="danger" size="" round @click="clearAesInfo()"
-        title="导出数据">
+      <el-button type="danger" size="small"  round @click="exportMarkdown()"
+        title="明文导出">
         <el-icon><ArrowExportLtr20Regular /></el-icon>
       </el-button>
     </div>
 
+    <!-- 进入页面时自动弹窗，要求输入 key 和 iv -->
     <InitCheck ref="initCheckRef" @verified="initData"></InitCheck>
+    <!-- 添加编辑平台的表单弹窗 -->
     <PlatformForm ref="platformFormComponent" @saved="addPlatform" @updated="updatePlatform"></PlatformForm>
+    <!-- 平台详情 及其 所有账号 -->
     <PlatformDetail ref="platformDetailComponent"></PlatformDetail>
   </div>
 </template>
@@ -67,20 +70,22 @@
   right: 1rem;
   //width: 3rem;
   //text-align: right;
-  display: flex;
-  flex-direction: column;
+  width: 4.5rem;
+  //display: flex;
+  //flex-direction: column;
 
   .el-button{
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 2rem;
+    height: 2rem;
     border-radius: 50%;
     margin-top: 4px;
     margin-left: 4px !important;
+    display: inline-flex;
     
     .el-icon{
-      width: 1.8rem;
-      height: 1.8rem;
-      color: white;
+      width: 1.2rem;
+      height: 1.2rem;
+      //color: white;
     }
   }
 
@@ -97,7 +102,7 @@
   width: calc( 100% - 1.5rem );
   height: calc( 100% - 1.5rem );
   position: relative;
-  background-color: #efeeee;
+  //background-color: #efeeee;
 
   .opts{
     position: absolute;

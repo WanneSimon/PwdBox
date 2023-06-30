@@ -6,6 +6,7 @@ import { AddCircle32Regular, Edit32Filled, Delete28Filled,
 import PlatformForm from './platform-form.vue'
 import PlatformDetail from './platform-detail.vue'
 import InitCheck from './init-check.vue'
+import { ElMessageBox } from "element-plus"
 
 export default {
   name: 'Pwdbox',
@@ -21,6 +22,7 @@ export default {
       ]
     }
   },
+  inject: [ "Noti" ],
   data() {
     return {
       showDatas: false,
@@ -188,7 +190,41 @@ export default {
       
       let icRef = this.$refs.initCheckRef
       icRef.showAndCheck()
-    }
+    },
+    
+    async exportMarkdown() {
+      let absPath = await DataOutOp.ExportFileExist().then(res => res)
+      if ( absPath ) {
+        ElMessageBox.confirm('是否覆盖旧文件： \n' + absPath, '文件已存在！', {
+            confirmButtonText: '覆盖',
+            cancelButtonText: '取消',
+            type: 'warning',
+            center: true,
+        }).then(() => {
+          this.innerExportMarkdown()
+        })
+      } else {
+        this.innerExportMarkdown()
+      }
+    },
+    async innerExportMarkdown() {
+      let absPath = await DataOutOp.ExportAllToMarkdown().then(res => {
+        ElMessageBox.alert(res, '导出成功', {
+          confirmButtonText: 'OK',
+          callback: (action) => {
+          },
+        })
+        return res
+      }).catch(err => {
+        console.error(err)
+        this.Noti.success({ message: "导出失败\n" + err.message, position: 'bottom-right', duration: 5000})
+      })
+      // this.Noti.success({ message: "导出成功", position: 'bottom-right', duration: 2000})
+      
+
+
+    }, 
+
   }
 
 }

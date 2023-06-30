@@ -75,7 +75,6 @@ func (as *AccountService) Update(entity Account) Account {
 
 func (as *AccountService) Get(id int64) Account {
 	en, _ := accountMapper.Get(id)
-	en.Password = ""
 	return en
 }
 

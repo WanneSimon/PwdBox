@@ -6,6 +6,8 @@ import (
 	"errors"
 	"io/ioutil"
 	"log"
+	"os"
+	"path/filepath"
 	"text/template"
 
 	"github.com/wanneSimon/pwdbox/internal/pwdbox"
@@ -53,21 +55,40 @@ func (a *MdVo) toText(tmp *template.Template) string {
 type DataOutOp struct {
 }
 
-// 对外导出方法
-func (do *DataOutOp) ExportAllToMarkdown() error {
+// 检查导出的文件是否已存在, 存在则返回文件的绝对路径
+func (do *DataOutOp) ExportFileExist() string {
+	file := "pwdbox-export.md"
+	_, err := os.Stat(file)
+
+	if err == nil {
+		absPath, _ := filepath.Abs(file)
+		return absPath
+	}
+
+	if os.IsNotExist(err) {
+		return ""
+	}
+
+	return ""
+}
+
+// 对外导出方法，成功则返回文件路径
+func (do *DataOutOp) ExportAllToMarkdown() (string, error) {
 	txt, err := do.ExportToMarkdown(pwdbox.AesHolder.Key, pwdbox.AesHolder.IV)
 	if err != nil {
 		log.Println(err)
-		return err
+		return "", err
 	}
 
-	err = ioutil.WriteFile("pwdbox-data.md", []byte(txt), 0666)
+	file := "pwdbox-export.md"
+	absPath, _ := filepath.Abs(file)
+	err = ioutil.WriteFile(absPath, []byte(txt), 0666)
 	if err != nil {
 		log.Println(err)
-		return err
+		return "", err
 	}
 
-	return nil
+	return absPath, nil
 }
 
 // 导出所有账号
@@ -94,8 +115,8 @@ func (do *DataOutOp) ExportToMarkdown(key []byte, iv []byte) (string, error) {
 			accountList := pwdbox.AccountServiceInstance.List(plat.Id, "", "", "", 1, 999999)
 
 			// 密码解码
-			for _, item := range accountList {
-				// item.Password = tool.DecryptPwd(item.Password)
+			for i := 0; i < len(accountList); i++ {
+				item := &accountList[i]
 				re, err := pwdbox.DecryptToString(item.Password, key, iv)
 				if err != nil {
 					return "", err
