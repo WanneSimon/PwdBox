@@ -16,4 +16,7 @@
 `-webview2 download` 构建时会下载 `webview2` 并压缩进程序中。
 构建时，使用 `-webview2 embed` 比不使用 `-webview2` 时的输出文件大，推荐不使用此选项。  
 
+`-upx` 此参数会压缩构建文件，构建文件体积更小，但可能会被安全软件报毒。 
+[下载upx](https://github.com/upx/upx/releases) ，将 upx 放到 `go` `bin` 目录下（确保环境变量中可以使用upx即可）。
+
 构建后，可执行文件同级目录下需要 `config/saya.yml` 和 `config/pwdbox.db3` 才能使用，对应仓库中 `config/saya.yml` 和 `config/pwdbox-init.db3` 。

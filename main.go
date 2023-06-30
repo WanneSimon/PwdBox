@@ -44,7 +44,7 @@ func main() {
 	// var rootPath string = "D:\\Git_Repo\\saya"
 	// appConfig := strings.Join(rootPath, filepath.Separator, "config", filepath.Separator, "saya.yml")
 	// sp := fmt.Sprintf("%c", filepath.Separator)
-	var appConfigPath = rootPath + sp + ConfigFolder + sp + "saya.yml"
+	var appConfigPath = rootPath + sp + ConfigFolder + "saya.yml"
 	configOps := conf.NewConfigOpsAndLoad(appConfigPath) // 配置操作
 
 	appConfig := configOps.Get() // 配置

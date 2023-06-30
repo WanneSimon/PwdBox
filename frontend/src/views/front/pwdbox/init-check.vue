@@ -17,8 +17,7 @@
           </div>
           
           <div v-else>
-            <!-- <div v-if="!hasData"> -->
-            <div class="init-tip">
+            <div class="init-tip" v-if="!hasData">
               初始化 <span class="imp">key</span> 和 <span class="imp">iv</span>
               <br/>
               <span class="bold"> 请务必牢记 key 和 iv !</span>

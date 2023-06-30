@@ -14,12 +14,12 @@
       -->
       <label class="icon-label" title="password box - 保险箱">
         <router-link :to="'/pwdbox'">
-          <el-button size="small" color="#626aef">pwdbox</el-button>
+          <el-button size="small" color="#626aef">保险箱</el-button>
         </router-link>
       </label>
       <label class="icon-label" title="tools - 小工具">
         <router-link :to="'/tools'">
-          <el-button size="small" color="#626aef">tools</el-button>
+          <el-button size="small" color="#626aef">小工具</el-button>
         </router-link>
       </label>
 

@@ -1,4 +1,4 @@
-title: 'pwdbox' 
+title: 'PwdBox' 
 debug: false
 frameless: true
 pwdbox: 'config/pwdbox.db3'
