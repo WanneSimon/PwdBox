@@ -9,5 +9,12 @@
   "author": {
     "name": "wanne",
     "email": "wanneseville@foxmail.com"
+  },
+  "info": {
+    "companyName": "",
+    "productName": "pwdbox",
+    "productVersion": "0.0.1",
+    "copyright": "",
+    "comments": "A simple password-box using go"
   }
 }

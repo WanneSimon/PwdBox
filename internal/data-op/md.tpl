@@ -12,6 +12,5 @@
 {{$item.Username}} / {{$item.Password}}  
 {{$item.Phone}} / {{$item.Email}}  
 {{$item.Remark}}  
-{{$item.CreateTime}}  
-{{end}}
+{{$item.CreateTime}}  {{end}}
 {{end}}

@@ -17,6 +17,13 @@
           </div>
           
           <div v-else>
+            <!-- <div v-if="!hasData"> -->
+            <div class="init-tip">
+              初始化 <span class="imp">key</span> 和 <span class="imp">iv</span>
+              <br/>
+              <span class="bold"> 请务必牢记 key 和 iv !</span>
+            </div>
+
             <el-form
               ref="verifyFormRef"
               :model="dataForm"
@@ -187,4 +194,18 @@ defineExpose({
 </script>
 
 <style scoped lang="scss">
+.init-tip{
+  font-size: 1rem;
+  margin-bottom: 0.2rem;
+  text-align: center;
+  
+  .imp {
+    color: #bf0f0f;
+  }
+  .bold{
+    font-size: 0.8rem;
+    font-weight: bolder;
+    color: #b58d18;
+  }
+}
 </style>
