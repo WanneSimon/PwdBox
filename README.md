@@ -10,7 +10,7 @@
 
 
 ### 构建
-`build` 目录下有不同的构建脚本，运行即可。  
+`build` 目录下有不同的构建脚本，此目录下运行即可。 [详细构建参数](https://wails.io/docs/reference/cli#build)  
 
 `wails` 对构建参数 `-webview2` 的说明和一般理解不太一样。  
 `-webview2 download` 构建时会下载 `webview2` 并压缩进程序中。
