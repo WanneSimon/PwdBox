@@ -1,6 +1,6 @@
 ### 使用
 1. 下载并安装 [webview2](https://developer.microsoft.com/n-us/microsoft-edge/webview2/)  
-2. 从 [realease](/realease) 下载程序包，解压并运行 `pwdbox.exe`
+2. 从 [realease](https://github.com/WanneSimon/PwdBox/releases) 下载程序包，解压并运行 `pwdbox.exe`
 
 ### 相关技术
 `go-1.18+` 
@@ -20,3 +20,6 @@
 [下载upx](https://github.com/upx/upx/releases) ，将 upx 放到 `go` `bin` 目录下（确保环境变量中可以使用upx即可）。
 
 构建后，可执行文件同级目录下需要 `config/saya.yml` 和 `config/pwdbox.db3` 才能使用，对应仓库中 `config/saya.yml` 和 `config/pwdbox-init.db3` 。
+
+### Preview
+ TODO ...

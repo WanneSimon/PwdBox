@@ -1,9 +1,10 @@
 
 build/bin/
 build/bin-/
-frontend/node_modules
-frontend/dist
-frontend/wailsjs/go
+/frontend/node_modules/
+/frontend/dist/
+/frontend/wailsjs/
+!frontend/wailsjs/index.ts
 test/
 pwd/key-iv-for-check
 pwd/pwdbox.db3
