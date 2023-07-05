@@ -50,25 +50,32 @@ func (a *App) Minimises() {
 
 // 让窗口完全透明化
 func (a *App) transparentWinOS(title string) {
-	hwnd := win.FindWindow(nil, syscall.StringToUTF16Ptr(title))
+	ti, _ := syscall.UTF16PtrFromString(title)
+	hwnd := win.FindWindow(nil, ti)
 	// hwnd := win.FindWindow(nil, syscall.UTF16PtrFromString(title))
 	win.SetWindowLong(hwnd, win.GWL_EXSTYLE, win.GetWindowLong(hwnd, win.GWL_EXSTYLE)|win.WS_EX_LAYERED)
 }
 
 // 不同平台启动指令不同 https://www.lmlphp.com/user/365130/article/item/8221378
 var OpenLinkCommands = map[string]string{
-	"windows": "start",
+	"windows": "start /c",
 	"darwin":  "open",
 	"linux":   "xdg-open",
 }
 
 func (a *App) OpenUrl(uri string) error {
 	// runtime.GOOS获取当前平台
-	run, ok := OpenLinkCommands[sysRuntime.GOOS]
+	gos := sysRuntime.GOOS
+	run, ok := OpenLinkCommands[gos]
 	if !ok {
-		return fmt.Errorf("don't know how to open things on %s platform", sysRuntime.GOOS)
+		return fmt.Errorf("don't know how to open things on %s platform", gos)
 	}
 
-	cmd := exec.Command(run, uri)
+	var cmd *exec.Cmd
+	if gos == "windows" {
+		cmd = exec.Command("cmd", run+" "+uri)
+	} else {
+		cmd = exec.Command(run, uri)
+	}
 	return cmd.Run()
 }
