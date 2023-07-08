@@ -50,14 +50,15 @@ func (a *App) Minimises() {
 
 // 让窗口完全透明化
 func (a *App) transparentWinOS(title string) {
-	hwnd := win.FindWindow(nil, syscall.StringToUTF16Ptr(title))
+	ti, _ := syscall.UTF16PtrFromString(title)
+	hwnd := win.FindWindow(nil, ti)
 	// hwnd := win.FindWindow(nil, syscall.UTF16PtrFromString(title))
 	win.SetWindowLong(hwnd, win.GWL_EXSTYLE, win.GetWindowLong(hwnd, win.GWL_EXSTYLE)|win.WS_EX_LAYERED)
 }
 
 // 不同平台启动指令不同 https://www.lmlphp.com/user/365130/article/item/8221378
 var OpenLinkCommands = map[string]string{
-	"windows": "/c start",
+	"windows": "start /c",
 	"darwin":  "open",
 	"linux":   "xdg-open",
 }
