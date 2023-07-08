@@ -1,6 +1,8 @@
 ### 使用
 1. 下载并安装 [webview2](https://developer.microsoft.com/n-us/microsoft-edge/webview2/)  
-2. 从 [realease](https://github.com/WanneSimon/PwdBox/releases) 下载程序包，解压并运行 `pwdbox.exe`
+2. 下载并安装最新的 [MinGW](https://sourceforge.net/projects/mingw-w64/files/mingw-w64/mingw-w64-release/) 环境，需要手动添加到环境变量。
+（一直往下翻，找到 **MinGW-W64 Online Installer** 或 **MinGW-W64 GCC-8.1.0**，下载 `MinGW-W64-install.exe 推荐`   或 `x86_64-posix-sjlj`， `x86_64-win32-sjlj`是32位的）
+3. 从 [realease](https://github.com/WanneSimon/PwdBox/releases) 下载程序包，解压并运行 `pwdbox.exe`
 
 ### 相关技术
 `go-1.18+` 
@@ -22,4 +24,6 @@
 构建后，可执行文件同级目录下需要 `config/saya.yml` 和 `config/pwdbox.db3` 才能使用，对应仓库中 `config/saya.yml` 和 `config/pwdbox-init.db3` 。
 
 ### Preview
- TODO ...
+![pwdbox-index](images/pwdbox-index.bmp)
+![pwdbox-platform](images/pwdbox-platform.bmp)
+![pwdbox-accounts](images/pwdbox-accounts.bmp)

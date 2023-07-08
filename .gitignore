@@ -6,6 +6,7 @@ build/bin-/
 /frontend/wailsjs/
 !frontend/wailsjs/index.ts
 test/
+logs/
 pwd/key-iv-for-check
 pwd/pwdbox.db3
 config/key-iv-for-check

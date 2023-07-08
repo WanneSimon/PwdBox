@@ -57,18 +57,24 @@ func (a *App) transparentWinOS(title string) {
 
 // 不同平台启动指令不同 https://www.lmlphp.com/user/365130/article/item/8221378
 var OpenLinkCommands = map[string]string{
-	"windows": "start",
+	"windows": "/c start",
 	"darwin":  "open",
 	"linux":   "xdg-open",
 }
 
 func (a *App) OpenUrl(uri string) error {
 	// runtime.GOOS获取当前平台
-	run, ok := OpenLinkCommands[sysRuntime.GOOS]
+	gos := sysRuntime.GOOS
+	run, ok := OpenLinkCommands[gos]
 	if !ok {
-		return fmt.Errorf("don't know how to open things on %s platform", sysRuntime.GOOS)
+		return fmt.Errorf("don't know how to open things on %s platform", gos)
 	}
 
-	cmd := exec.Command(run, uri)
+	var cmd *exec.Cmd
+	if gos == "windows" {
+		cmd = exec.Command("cmd", run+" "+uri)
+	} else {
+		cmd = exec.Command(run, uri)
+	}
 	return cmd.Run()
 }

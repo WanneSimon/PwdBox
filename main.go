@@ -4,6 +4,7 @@ import (
 	"context"
 	"embed"
 	"fmt"
+	"io"
 	"log"
 	"os"
 	"path"
@@ -33,6 +34,7 @@ var sp = fmt.Sprintf("%c", filepath.Separator)
 var ConfigFolder string = "config" + sp
 
 func main() {
+	initLog()
 	// Create an instance of the app structure
 	app := NewApp()
 	fileOp := env.FileOp{} // 文件操作
@@ -81,6 +83,9 @@ func main() {
 			app, configOps, &fileOp, &dbop,
 			&(pwdbox.PlatformServiceInstance), &pwdbox.AccountServiceInstance,
 			&pwdTool, &dataOutOp,
+		},
+		Debug: options.Debug{
+			OpenInspectorOnStartup: appConfig.Debug,
 		},
 		Windows: &windows.Options{
 			WebviewIsTransparent: true,
@@ -133,4 +138,26 @@ func getCurrentAbPathByCaller() string {
 		abPath = path.Dir(filename)
 	}
 	return abPath
+}
+
+// 日志
+func initLog() {
+	consoleOut := os.Stdout
+	file, err := os.OpenFile("logs/log.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+	var outWriters []io.Writer
+	if err == nil {
+		outWriters = []io.Writer{consoleOut, file}
+	} else {
+		outWriters = []io.Writer{consoleOut}
+	}
+
+	_, err2 := os.Stat("logs")
+	if err2 != nil {
+		if os.IsNotExist(err2) {
+			os.MkdirAll("logs", os.ModePerm)
+		}
+	}
+
+	multiWriter := io.MultiWriter(outWriters...)
+	log.SetOutput(multiWriter)
 }
