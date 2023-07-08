@@ -13,7 +13,7 @@
   "info": {
     "companyName": "",
     "productName": "pwdbox",
-    "productVersion": "0.0.1",
+    "productVersion": "0.0.2",
     "copyright": "",
     "comments": "A simple password-box using go"
   }
