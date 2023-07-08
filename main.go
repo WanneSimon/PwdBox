@@ -58,7 +58,8 @@ func main() {
 
 	// Create application with options
 	err := wails.Run(&options.App{
-		Title: appConfig.Title, //"pwdbox",
+		Title:         appConfig.Title, //"pwdbox",
+		DisableResize: true,
 		// Width:     1024,
 		// Height:    768,
 		Width:     930,

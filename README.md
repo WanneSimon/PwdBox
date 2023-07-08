@@ -24,6 +24,6 @@
 构建后，可执行文件同级目录下需要 `config/saya.yml` 和 `config/pwdbox.db3` 才能使用，对应仓库中 `config/saya.yml` 和 `config/pwdbox-init.db3` 。
 
 ### Preview
-![pwdbox-index](images/pwdbox-index.bmp)
-![pwdbox-platform](images/pwdbox-platform.bmp)
-![pwdbox-accounts](images/pwdbox-accounts.bmp)
+![pwdbox-index](images/pwdbox-index.jpg)
+![pwdbox-platform](images/pwdbox-platform.jpg)
+![pwdbox-accounts](images/pwdbox-accounts.jpg)
